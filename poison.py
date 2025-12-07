@@ -9,6 +9,10 @@ x,y = pygame.display.get_desktop_sizes()[0]
 screen = pygame.display.set_mode((x*0.89, y*0.89))
 tp.init(screen, tp.theme_game1) #bind screen to gui elements and set theme
 
+pygame.display.set_caption("Poison Ivy")
+icon = pygame.image.load("gfx/ivyleaf.png")
+pygame.display.set_icon(icon)
+
 '''text = tp.Text("Here we use a dummy, Paint-generated\nimage for demonstration. "+\
                    "Try to move the elements below.")
 text.set_max_text_width(400)
