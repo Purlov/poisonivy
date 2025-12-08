@@ -53,6 +53,8 @@ box = tp.TitleBox("Some demo box", [tp.Text("In this case, fast=True\nmay be wel
 box.set_draggable(True, True)
 box.generate_shadow(fast=True)'''
 
+logo = pygame.image.load("gfx/logo.png")
+
 def save_game(number):
     print(str(number))
 
@@ -64,7 +66,11 @@ for i in range(15):
         save_game_objects[len(save_game_objects)-1].at_unclick=save_gamer
 
 def change_window():
-    main_menu_box.blit()
+    main_group = tp.Box(save_game_objects)
+    updater = main_group.get_updater()
+    '''for i in range(len(all_windows)):
+        for j in range(len(all_windows[i])):
+            all_windows[i][j].unblit()'''
 
 main_menu_objects = []
 main_menu_objects.append(tp.Button("Continue Game"))
@@ -83,14 +89,12 @@ main_menu_objects.append(tp.Button("Exit"))
 main_menu_objects[len(main_menu_objects)-1].at_unclick=pygame.quit
 main_menu_objects[len(main_menu_objects)-1].generate_shadow(fast=True)
 
-save_game_box = tp.Box(save_game_objects)
-
-main_menu_box = tp.TitleBox("Poison Ivy Options", main_menu_objects)
+main_group = tp.TitleBox("Poison Ivy Options", main_menu_objects)
 # main_group.set_size((500,500))
-main_menu_box.sort_children(gap=20)
-main_menu_box.center_on(screen)
+main_group.sort_children(gap=20)
+main_group.center_on(screen)
 
-updater = main_menu_box.get_updater()
+updater = main_group.get_updater()
 
 normal_font = pygame.font.Font(None, 32)
 
@@ -105,8 +109,14 @@ while running:
     #menu.draw() # Draw all elements in menu
 
     screen.fill((150,150,150)) # Clear screen
+
     fps_text = normal_font.render("FPS = "+str(round(clock.get_fps()))+" MIN_TARGET = "+str(GAME_FPS), True, pygame.Color(255, 165, 0, a=140), None)
     screen.blit(fps_text,(0,0))
+
+    screen_width, screen_height = pygame.display.get_surface().get_size()
+
+    logo_width = logo.get_width()
+    screen.blit(logo, (screen_width/2-logo_width/2, screen_height*0.085))
 
     updater.update(events=pygame.event.get(), mouse_rel=pygame.mouse.get_rel())
 
