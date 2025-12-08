@@ -1,5 +1,7 @@
 """We show here how to generate and binds a shadow to an element."""
 
+GAME_FPS = 144
+
 import sys, pygame, thorpy as tp
 from functools import partial
 
@@ -62,9 +64,7 @@ for i in range(15):
         save_game_objects[len(save_game_objects)-1].at_unclick=save_gamer
 
 def change_window():
-    for i in range(len(all_windows)):
-        for j in range(len(all_windows[i])):
-            all_windows[i][j].unblit()
+    main_menu_box.blit()
 
 main_menu_objects = []
 main_menu_objects.append(tp.Button("Continue Game"))
@@ -83,16 +83,14 @@ main_menu_objects.append(tp.Button("Exit"))
 main_menu_objects[len(main_menu_objects)-1].at_unclick=pygame.quit
 main_menu_objects[len(main_menu_objects)-1].generate_shadow(fast=True)
 
-all_windows = []
-all_windows.append(main_menu_objects)
-all_windows.append(save_game_objects)
+save_game_box = tp.Box(save_game_objects)
 
-main_group = tp.TitleBox("Poison Ivy Options", main_menu_objects)
+main_menu_box = tp.TitleBox("Poison Ivy Options", main_menu_objects)
 # main_group.set_size((500,500))
-main_group.sort_children(gap=20)
-main_group.center_on(screen)
+main_menu_box.sort_children(gap=20)
+main_menu_box.center_on(screen)
 
-updater = main_group.get_updater()
+updater = main_menu_box.get_updater()
 
 normal_font = pygame.font.Font(None, 32)
 
@@ -107,13 +105,13 @@ while running:
     #menu.draw() # Draw all elements in menu
 
     screen.fill((150,150,150)) # Clear screen
-    fps_text = normal_font.render("FPS = "+str(round(clock.get_fps()))+" TARGET = 144", True, pygame.Color(255, 165, 0, a=140), None)
+    fps_text = normal_font.render("FPS = "+str(round(clock.get_fps()))+" MIN_TARGET = "+str(GAME_FPS), True, pygame.Color(255, 165, 0, a=140), None)
     screen.blit(fps_text,(0,0))
 
     updater.update(events=pygame.event.get(), mouse_rel=pygame.mouse.get_rel())
 
     pygame.display.flip() # Update display
 
-    clock.tick(144)
+    clock.tick(GAME_FPS)
 
 pygame.quit()
