@@ -116,10 +116,10 @@ while running:
     screen_width, screen_height = pygame.display.get_surface().get_size()
 
     logo_width, logo_height = logo.get_size()
-    icon_width, icon_height = icon.get_size()
-    icon = pygame.transform.scale(icon, (150, 150))
+    icon_scaled = pygame.transform.scale(icon, (150, 150))
+    icon_width, icon_height = icon_scaled.get_size()
     screen.blit(logo, (screen_width/2-logo_width/2, screen_height*0.085))
-    screen.blit(icon, (screen_width/2-logo_width/2-icon_width-25, screen_height*0.085))
+    screen.blit(icon_scaled, (screen_width/2-logo_width/2-icon_width-25, screen_height*0.085))
 
     updater.update(events=pygame.event.get(), mouse_rel=pygame.mouse.get_rel())
 
