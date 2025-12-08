@@ -80,8 +80,7 @@ save_game_objects = []
 for i in range(15):
     if i < 5:
         save_game_objects.append(tp.Button("Save to Slot "+str(i)))
-        save_gamer = save_game(i)
-        save_game_objects[len(save_game_objects)-1].at_unclick=save_gamer
+        save_game_objects[len(save_game_objects)-1].at_unclick=partial(save_game, i)
 
 def change_window():
     main_group = tp.Box(save_game_objects)
@@ -89,6 +88,13 @@ def change_window():
     '''for i in range(len(all_windows)):
         for j in range(len(all_windows[i])):
             all_windows[i][j].unblit()'''
+    
+def save_game_pressed():
+    global updater
+    main_group = tp.Box(save_game_objects)
+    main_group.sort_children(gap=20)
+    main_group.center_on(screen)
+    updater = main_group.get_updater()
 
 main_menu_objects = []
 main_menu_objects.append(tp.Button("Continue Game"))
@@ -97,7 +103,7 @@ main_menu_objects.append(tp.Button("New Game"))
 main_menu_objects[len(main_menu_objects)-1].at_unclick=change_window
 main_menu_objects[len(main_menu_objects)-1].generate_shadow(fast=True)
 main_menu_objects.append(tp.Button("Save Game"))
-main_menu_objects[len(main_menu_objects)-1].at_unclick=change_window
+main_menu_objects[len(main_menu_objects)-1].at_unclick=save_game_pressed
 main_menu_objects[len(main_menu_objects)-1].generate_shadow(fast=True)
 main_menu_objects.append(tp.Button("Load Game"))
 main_menu_objects[len(main_menu_objects)-1].generate_shadow(fast=True)
@@ -114,26 +120,32 @@ main_group.center_on(screen)
 
 updater = main_group.get_updater()
 
+
+
 clock = pygame.time.Clock()
+
+leaf = "main_menu"
 
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        #menu.react(event) # Let ThorPy handle events
-    #menu.draw() # Draw all elements in menu
 
-    screen.fill((150,150,150)) # Clear screen
+        if leaf == "main_menu":
+            a = 1
 
-    fps_text = normal_font.render("FPS = "+str(round(clock.get_fps()))+" MIN_TARGET = "+str(GAME_FPS), True, pygame.Color(255, 165, 0, a=140), None)
-    screen.blit(fps_text,(0,0))
+    if leaf == "main_menu":
+        screen.fill((150,150,150)) # Clear screen
 
-    screen.blit(logo, (screen_width/2-logo_width/2, screen_height*0.085))
-    screen.blit(icon_main_scaled, (screen_width/2-logo_width/2-icon_main_width-25, screen_height*0.085))
-    screen.blit(golden_chest_main_scaled, (screen_width-golden_chest_main_width-10, screen_height-golden_chest_main_height-10))
-    screen.blit(dark_elf_main_scaled, (screen_width-golden_chest_main_width-dark_elf_main_width-10-10, screen_height-dark_elf_main_height-10))
-    screen.blit(gladiator_text, (screen_width-gladiator_text_width-10, screen_height-dark_elf_main_height-10-gladiator_text_height))
+        fps_text = normal_font.render("FPS = "+str(round(clock.get_fps()))+" MIN_TARGET = "+str(GAME_FPS), True, pygame.Color(255, 165, 0, a=140), None)
+        screen.blit(fps_text,(0,0))
+
+        screen.blit(logo, (screen_width/2-logo_width/2, screen_height*0.085))
+        screen.blit(icon_main_scaled, (screen_width/2-logo_width/2-icon_main_width-25, screen_height*0.085))
+        screen.blit(golden_chest_main_scaled, (screen_width-golden_chest_main_width-10, screen_height-golden_chest_main_height-10))
+        screen.blit(dark_elf_main_scaled, (screen_width-golden_chest_main_width-dark_elf_main_width-10-10, screen_height-dark_elf_main_height-10))
+        screen.blit(gladiator_text, (screen_width-gladiator_text_width-10, screen_height-dark_elf_main_height-10-gladiator_text_height))
 
     updater.update(events=pygame.event.get(), mouse_rel=pygame.mouse.get_rel())
 
