@@ -132,11 +132,12 @@ def change_window(name):
     updater = main_group.get_updater()
 
 def save_game(number):
-    alert = tp.AlertWithChoices("Saving Game", ("Yes", "No"), text="Do you wish to save into this slot.\nOld save is formatted.")
+    prompt = tp.TextInput("", "Enter Save Name")
+    alert = tp.AlertWithChoices("Saving Game", ("Yes", "No"), text="Do you wish to save into this slot.\nOld save is formatted.", children=[prompt])
     alert.generate_shadow(fast=False) 
     alert.launch_alone(click_outside_cancel=True) #tune some options if you like
     if alert.choice == "Yes":
-        print("Saving to slot "+str(number))
+        print("Saving to slot "+str(number)+" with the slot name "+prompt.get_value())
 
 change_window("main_menu")
 
