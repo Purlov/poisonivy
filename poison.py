@@ -1,6 +1,7 @@
 """We show here how to generate and binds a shadow to an element."""
 
 GAME_FPS = 144
+LICENSES = "David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm" # update from LICENSES.txt
 
 import pygame, thorpy as tp
 from functools import partial
@@ -15,7 +16,7 @@ pygame.init()
 x,y = pygame.display.get_desktop_sizes()[0]
 screen_width, screen_height = x*0.89, y*0.89
 screen = pygame.display.set_mode((screen_width, screen_height))
-tp.init(screen, tp.theme_game1) #bind screen to gui elements and set theme
+tp.init(screen, tp.theme_game1)
 
 pygame.display.set_caption("Poison Ivy")
 icon = pygame.image.load("gfx/ivyleaf.png")
@@ -97,6 +98,9 @@ saving_text_w, saving_text_h = saving_text.get_size()
 loading_text = normal_font.render("Loading the Game", True, pygame.Color(255, 165, 0, a=140), None)
 loading_text_w, loading_text_h = loading_text.get_size()
 
+options_text = normal_font.render("Options", True, pygame.Color(255, 165, 0, a=140), None)
+options_text_w, options_text_h = options_text.get_size()
+
 def change_window(name):
     global updater
     global leaf 
@@ -115,6 +119,7 @@ def change_window(name):
         main_menu_objects[len(main_menu_objects)-1].at_unclick=partial(change_window, "load_game")
         main_menu_objects[len(main_menu_objects)-1].generate_shadow(fast=True)
         main_menu_objects.append(tp.Button("Options & Credits"))
+        main_menu_objects[len(main_menu_objects)-1].at_unclick=partial(change_window, "options")
         main_menu_objects[len(main_menu_objects)-1].generate_shadow(fast=True)
         main_menu_objects.append(tp.Button("Exit"))
         main_menu_objects[len(main_menu_objects)-1].at_unclick=exit
@@ -176,6 +181,16 @@ def change_window(name):
         main_group = tp.Group([save_all], "h")
         main_group.sort_children(gap=20)
         main_group.center_on(screen)
+    elif leaf == "options":
+        save_back_to_menu_button = tp.Button("Back to Main Menu")
+        save_back_to_menu_button.at_unclick=partial(change_window, "main_menu")
+        save_back_to_menu_button.generate_shadow(fast=True)
+        last_horizontal = tp.Group([], "h")
+        save_all = tp.Group([last_horizontal, save_back_to_menu_button], "v")
+
+        main_group = tp.Group([save_all], "h")
+        main_group.sort_children(gap=20)
+        main_group.center_on(screen)
         
     updater = main_group.get_updater()
 
@@ -227,7 +242,7 @@ while running:
     debug_text_w, debug_text_h = loading_text.get_size()
     screen.blit(debug_text,(10,screen_height-10-debug_text_h))
 
-    if leaf == "main_menu" or leaf =="save_game" or leaf=="load_game":
+    if leaf == "main_menu" or leaf =="save_game" or leaf=="load_game" or leaf == "options":
         screen.blit(logo, (screen_width/2-logo_width/2, screen_height*0.085))
         screen.blit(icon_main_scaled, (screen_width/2-logo_width/2-icon_main_width-25, screen_height*0.085))
         screen.blit(golden_chest_main_scaled, (screen_width-golden_chest_main_width-10, screen_height-golden_chest_main_height-10))
@@ -240,6 +255,8 @@ while running:
         screen.blit(saving_text, (screen_width/2-saving_text_w/2,0.3*screen_height))
     elif leaf == "load_game":
         screen.blit(loading_text, (screen_width/2-loading_text_w/2,0.3*screen_height))
+    elif leaf == "options":
+        screen.blit(options_text, (screen_width/2-options_text_w/2,0.3*screen_height))
         
     updater.update(events=pygame.event.get(), mouse_rel=pygame.mouse.get_rel())
 
