@@ -4,7 +4,7 @@ GAME_FPS = 144
 
 import pygame, thorpy as tp
 from functools import partial
-from os import path
+from os import path, mkdir
 import random
 import pickle
 
@@ -58,6 +58,9 @@ some_text.set_draggable(True, True)
 box = tp.TitleBox("Some demo box", [tp.Text("In this case, fast=True\nmay be well suited.")])
 box.set_draggable(True, True)
 box.generate_shadow(fast=True)'''
+
+if not path.exists("save"):
+    mkdir("save")
 
 save_names = []
 if path.exists("save/save_names"):
@@ -181,7 +184,7 @@ Save = {
 }
 
 def save_game(number):
-    global Save
+    global Save # wat up
     prompt = tp.TextInput("", "Enter Save Name")
     alert = tp.AlertWithChoices("Saving Game", ("Yes", "No"), text="Do you wish to save into this slot?\nOld save is formatted.", children=[prompt])
     alert.generate_shadow(fast=False) 
