@@ -1,7 +1,8 @@
 """We show here how to generate and binds a shadow to an element."""
 
 GAME_FPS = 144
-LICENSES = "David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm" # update from LICENSES.txt
+LICENSES2 = "David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm" # update from LICENSES.txt
+LICENSES = "David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm\n\n\nRed outfit for main character - graphics/charright & left.png\nhttps://opengameart.org/content/occupational-icons\nhttps://opengameart.org/users/technopeasant - Graham L. Wilson (technopeasant)\nTiles have been drawn by David E. Gervais, and are published under the Creative Commons license.\nYou are free to copy, distribute and transmit those tiles as long as you credit David Gervais as their creator.\nCC-BY 3.0\nhttp://creativecommons.org/licenses/by/3.0/\n\n\nA sand road - graphics/road2.png\nhttps://opengameart.org/content/pixel-art-top-down-tileset\nFrom user https://opengameart.org/users/dustdfg - Yevhen Babiichuk (DustDFG)\nCC-BY-SA 4.0\nhttps://creativecommons.org/licenses/by-sa/4.0/\n\n\nGold stuff in the Main Menu background\nhttps://opengameart.org/content/gold-treasure-icons-16x16s\nFrom user https://opengameart.org/users/bonsaiheldin - Bonsaiheldin\n"
 
 import pygame, thorpy as tp
 from functools import partial
@@ -98,8 +99,13 @@ saving_text_w, saving_text_h = saving_text.get_size()
 loading_text = normal_font.render("Loading the Game", True, pygame.Color(255, 165, 0, a=140), None)
 loading_text_w, loading_text_h = loading_text.get_size()
 
-options_text = normal_font.render("Options", True, pygame.Color(255, 165, 0, a=140), None)
-options_text_w, options_text_h = options_text.get_size()
+def exit_game():
+    global running
+    alert = tp.AlertWithChoices("Exiting", ("Yes", "No"), text="Do you wish to quit the program?\nAll unsaved progress will be lost.")
+    alert.generate_shadow(fast=False) 
+    alert.launch_alone(click_outside_cancel=False) # it would accidentally click other buttons
+    if alert.choice == "Yes":
+            running = False
 
 def change_window(name):
     global updater
@@ -122,7 +128,7 @@ def change_window(name):
         main_menu_objects[len(main_menu_objects)-1].at_unclick=partial(change_window, "options")
         main_menu_objects[len(main_menu_objects)-1].generate_shadow(fast=True)
         main_menu_objects.append(tp.Button("Exit"))
-        main_menu_objects[len(main_menu_objects)-1].at_unclick=exit
+        main_menu_objects[len(main_menu_objects)-1].at_unclick=exit_game
         main_menu_objects[len(main_menu_objects)-1].generate_shadow(fast=True)
 
         main_group = tp.TitleBox("Poison Ivy Options", main_menu_objects)
@@ -185,14 +191,48 @@ def change_window(name):
         save_back_to_menu_button = tp.Button("Back to Main Menu")
         save_back_to_menu_button.at_unclick=partial(change_window, "main_menu")
         save_back_to_menu_button.generate_shadow(fast=True)
-        last_horizontal = tp.Group([], "h")
-        save_all = tp.Group([last_horizontal, save_back_to_menu_button], "v")
+
+        #global licenses_area
+        global licenses_area#, licenses_box
+        licenses_area = tp.Text(LICENSES, font_size=24, max_width=950, font_color=(250,250,250))
+        #licenses_box = tp.Box([licenses_area], size_limit=(1000,600))
+        #licenses_box.at_drag = splice_license
+
+        #empty_area = tp.OutlinedText("\n", font_size=32, max_width=100, font_color=(250,250,250), outline_color=(50,50,50), outline_thickness=2)
+       # empty_box = tp.Box([empty_area], scrollbar_if_needed= True, size_limit=(300,100))
+
+        options_up = tp.Button("Move up")
+        options_up.at_unclick=partial(move_options_text, "up")
+        options_up.generate_shadow(fast=True)
+
+        options_down = tp.Button("Move down")
+        options_down.at_unclick=partial(move_options_text, "down")
+        options_down.generate_shadow(fast=True)
+
+        last_horizontals1 = tp.Group([licenses_area], "h")
+        last_horizontals2 = tp.Group([options_up, save_back_to_menu_button, options_down], "h")
+        save_all = tp.Group([last_horizontals1, last_horizontals2], "v")
 
         main_group = tp.Group([save_all], "h")
         main_group.sort_children(gap=20)
         main_group.center_on(screen)
+
+        move_options_text("up")
         
     updater = main_group.get_updater()
+
+options_current_h = 0
+def move_options_text(direction):
+    license_text_spliced = LICENSES.splitlines(False)
+    global licenses_area, options_current_h
+    if direction == "down":
+        options_current_h = min(len(license_text_spliced)-9, options_current_h + 1)
+    elif direction == "up":
+        options_current_h = max(0,options_current_h - 1)
+    
+    license_text = "\n".join(license_text_spliced[options_current_h:options_current_h+9])
+    licenses_area.set_text(license_text)
+    licenses_area.set_topleft(screen_width/2-logo_width/2-icon_main_width-25, screen_height*0.085+icon_main_height+25)
 
 Save = {
     "identifier": random.randint(1111,8888)
@@ -232,7 +272,11 @@ running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            alert = tp.AlertWithChoices("Exiting", ("Yes", "No"), text="Do you wish to quit the program?\nAll unsaved progress will be lost.")
+            alert.generate_shadow(fast=False) 
+            alert.launch_alone(click_outside_cancel=False) # it would accidentally click other buttons
+            if alert.choice == "Yes":
+                    running = False
 
     screen.fill((150,150,150)) # Clear screen
 
@@ -256,7 +300,7 @@ while running:
     elif leaf == "load_game":
         screen.blit(loading_text, (screen_width/2-loading_text_w/2,0.3*screen_height))
     elif leaf == "options":
-        screen.blit(options_text, (screen_width/2-options_text_w/2,0.3*screen_height))
+        a = 1
         
     updater.update(events=pygame.event.get(), mouse_rel=pygame.mouse.get_rel())
 
