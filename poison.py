@@ -2,13 +2,14 @@
 
 GAME_FPS = 144
 LICENSES2 = "David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm" # update from LICENSES.txt
-LICENSES = "David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm\n\n\nRed outfit for main character - graphics/charright & left.png\nhttps://opengameart.org/content/occupational-icons\nhttps://opengameart.org/users/technopeasant - Graham L. Wilson (technopeasant)\nTiles have been drawn by David E. Gervais, and are published under the Creative Commons license.\nYou are free to copy, distribute and transmit those tiles as long as you credit David Gervais as their creator.\nCC-BY 3.0\nhttp://creativecommons.org/licenses/by/3.0/\n\n\nA sand road - graphics/road2.png\nhttps://opengameart.org/content/pixel-art-top-down-tileset\nFrom user https://opengameart.org/users/dustdfg - Yevhen Babiichuk (DustDFG)\nCC-BY-SA 4.0\nhttps://creativecommons.org/licenses/by-sa/4.0/\n\n\nGold stuff in the Main Menu background\nhttps://opengameart.org/content/gold-treasure-icons-16x16s\nFrom user https://opengameart.org/users/bonsaiheldin - Bonsaiheldin\n"
+LICENSES = "David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm\n\n\nThese next ones are just to show the functionality copied from my old games\n\nRed outfit for main character - graphics/charright & left.png\nhttps://opengameart.org/content/occupational-icons\nhttps://opengameart.org/users/technopeasant - Graham L. Wilson (technopeasant)\nTiles have been drawn by David E. Gervais, and are published under the Creative Commons license. \nYou are free to copy, distribute and transmit those tiles as long as you credit David Gervais as their creator.\nCC-BY 3.0\nhttp://creativecommons.org/licenses/by/3.0/\n\n\nA sand road - graphics/road2.png\nhttps://opengameart.org/content/pixel-art-top-down-tileset\nFrom user https://opengameart.org/users/dustdfg - Yevhen Babiichuk (DustDFG)\nCC-BY-SA 4.0\nhttps://creativecommons.org/licenses/by-sa/4.0/\n\n\nGold stuff in the Main Menu background\nhttps://opengameart.org/content/gold-treasure-icons-16x16s\nFrom user https://opengameart.org/users/bonsaiheldin - Bonsaiheldin"
 
 import pygame, thorpy as tp
 from functools import partial
 from os import path, mkdir
 import random
 import pickle
+import lzma
 
 random.seed()
 
@@ -67,12 +68,15 @@ if not path.exists("save"):
 save_names = []
 if path.exists("save/save_names"):
     with open("save/save_names", "rb") as file:
-        save_names = pickle.load(file)
+        decompressed = lzma.decompress(file.read())
+        save_names = pickle.loads(decompressed)
 else:
     for i in range(15):
         save_names.append("--- Empty Save Slot Number "+str(i)+" ---")
     with open("save/save_names", "wb") as file:
-        pickle.dump(save_names, file)
+        pickled = pickle.dumps(save_names)
+        compressed = lzma.compress(pickled)
+        file.write(compressed)
 
 logo = pygame.image.load("gfx/logo.png")
 logo_width, logo_height = logo.get_size()
@@ -226,9 +230,9 @@ def move_options_text(direction):
     license_text_spliced = LICENSES.splitlines(False)
     global licenses_area, options_current_h
     if direction == "down":
-        options_current_h = min(len(license_text_spliced)-9, options_current_h + 1)
+        options_current_h = min(len(license_text_spliced)-9, options_current_h + 2)
     elif direction == "up":
-        options_current_h = max(0,options_current_h - 1)
+        options_current_h = max(0,options_current_h - 2)
     
     license_text = "\n".join(license_text_spliced[options_current_h:options_current_h+9])
     licenses_area.set_text(license_text)
@@ -248,9 +252,14 @@ def save_game(number):
         save_names[number] = prompt.get_value()
         print("Saving to slot "+str(number)+" with the slot name "+prompt.get_value())
         with open("save/save_names", "wb") as file:
-            pickle.dump(save_names, file)
+            pickled = pickle.dumps(save_names)
+            compressed = lzma.compress(pickled)
+            file.write(compressed)
         with open("save/save"+str(number), "wb") as file:
-            pickle.dump(Save, file)
+            pickled = pickle.dumps(Save)
+            compressed = lzma.compress(pickled)
+            file.write(compressed)
+
         change_window("save_game")
 
 def load_game(number):
@@ -262,7 +271,8 @@ def load_game(number):
         print("Loading from slot "+str(number))
         if path.exists("save/save"+str(number)):
             with open("save/save"+str(number), "rb") as file:
-                Save = pickle.load(file)
+                decompressed = lzma.decompress(file.read())
+                Save = pickle.loads(decompressed)
 
 change_window("main_menu")
 
