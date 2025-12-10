@@ -232,7 +232,7 @@ def change_window(name):
     elif leaf == "new_game":
         global new_type_toggle, new_game_monster_description, new_game_name
         new_type_toggle = tp.TogglablesPool("Character Types", ("Taurian", "Dark Elf", "Skeleton"), Save["character_type"].title())
-        #new_type_toggle.at_unclick=change_character_type
+        #new_type_toggle.at_unclick=change_character_type #commented since it is watched in the main loop
 
         save_back_to_menu_button = tp.Button("Back to Main Menu")
         save_back_to_menu_button.at_unclick=partial(change_window, "main_menu")
