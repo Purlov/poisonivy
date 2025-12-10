@@ -302,7 +302,7 @@ Types = {
             "img_med": load_tile("gfx/taurian.png", monster_tile_size_med),
             "img_max": load_tile("gfx/taurian.png", monster_tile_size_max),
             "hp": 100,
-            "description": "wazaal\nasdalaksd\ncompressum don't know what up with taurians these days vdon't know what up with taurians these daysdon't know what up with taurians these daysdon't know what up with taurians these daysdon't know what up with taurians these days"
+            "description": "Taurians are agile and strong. Their type of fighting is close combat with dual weapons. They don't wear armour but they instead dodge. That's a good style. They come from a lush jungle where they cook magic porridges so they have aptitude for magically enchanted weapons."
         }, 
         "dark elf": {
             "img_min": load_tile("gfx/dark_elf.png", monster_tile_size_min),
