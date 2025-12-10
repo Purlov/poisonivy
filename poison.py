@@ -2,7 +2,7 @@
 
 GAME_FPS = 144
 LICENSES2 = "David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm" # update from LICENSES.txt
-LICENSES = "David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm\n\n\nThese next ones are just to show the functionality copied from my old games\n\nRed outfit for main character - graphics/charright & left.png\nhttps://opengameart.org/content/occupational-icons\nhttps://opengameart.org/users/technopeasant - Graham L. Wilson (technopeasant)\nTiles have been drawn by David E. Gervais, and are published under the Creative Commons license. \nYou are free to copy, distribute and transmit those tiles as long as you credit David Gervais as their creator.\nCC-BY 3.0\nhttp://creativecommons.org/licenses/by/3.0/\n\n\nA sand road - graphics/road2.png\nhttps://opengameart.org/content/pixel-art-top-down-tileset\nFrom user https://opengameart.org/users/dustdfg - Yevhen Babiichuk (DustDFG)\nCC-BY-SA 4.0\nhttps://creativecommons.org/licenses/by-sa/4.0/\n\n\nGold stuff in the Main Menu background\nhttps://opengameart.org/content/gold-treasure-icons-16x16s\nFrom user https://opengameart.org/users/bonsaiheldin - Bonsaiheldin"
+LICENSES = "David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm\n\n\nThese next ones are just to show the functionality copied from my old games\n\nRed outfit for main character - graphics/charright & left.png\nhttps://opengameart.org/content/occupational-icons\nhttps://opengameart.org/users/technopeasant - Graham L. Wilson (technopeasant)\nTiles have been drawn by David E. Gervais, and are published under the Creative Commons license.\nYou are free to copy, distribute and transmit those tiles as long as you credit David Gervais as their creator.\nCC-BY 3.0\nhttp://creativecommons.org/licenses/by/3.0/\n\n\nA sand road - graphics/road2.png\nhttps://opengameart.org/content/pixel-art-top-down-tileset\nFrom user https://opengameart.org/users/dustdfg - Yevhen Babiichuk (DustDFG)\nCC-BY-SA 4.0\nhttps://creativecommons.org/licenses/by-sa/4.0/\n\n\nGold stuff in the Main Menu background\nhttps://opengameart.org/content/gold-treasure-icons-16x16s\nFrom user https://opengameart.org/users/bonsaiheldin - Bonsaiheldin"
 
 import pygame, thorpy as tp
 from functools import partial
@@ -234,9 +234,9 @@ def move_options_text(direction):
     license_text_spliced = LICENSES.splitlines(False)
     global licenses_area, options_current_h
     if direction == "down":
-        options_current_h = min(len(license_text_spliced)-14, options_current_h + 2)
+        options_current_h = min(len(license_text_spliced)-14, options_current_h + 3)
     elif direction == "up":
-        options_current_h = max(0,options_current_h - 2)
+        options_current_h = max(0,options_current_h - 3)
     
     license_text = "\n".join(license_text_spliced[options_current_h:options_current_h+14])
     licenses_area.set_text(license_text)
@@ -327,6 +327,7 @@ while running:
         screen.blit(loading_text, (screen_width/2-loading_text_w/2,0.3*screen_height))
     elif leaf == "options":
         #screen.fill((150,0,0))
+        pygame.draw.rect(screen, (50,150,50), (screen_width/2-logo_width/2-icon_main_width-25-10, screen_height*0.085+icon_main_height+25-10,1000+20,400+20))
         pygame.draw.rect(screen, (50,50,250), (screen_width/2-logo_width/2-icon_main_width-25, screen_height*0.085+icon_main_height+25,1000,400))
         #screen_width/2-logo_width/2-icon_main_width-25, screen_height*0.085+icon_main_height+25
         
