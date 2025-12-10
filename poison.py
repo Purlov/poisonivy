@@ -234,7 +234,7 @@ def move_options_text(direction):
     license_text_spliced = LICENSES.splitlines(False)
     global licenses_area, options_current_h
     if direction == "down":
-        options_current_h = min(len(license_text_spliced)-9, options_current_h + 2)
+        options_current_h = min(len(license_text_spliced)-14, options_current_h + 2)
     elif direction == "up":
         options_current_h = max(0,options_current_h - 2)
     
