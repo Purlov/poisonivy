@@ -231,7 +231,7 @@ def change_window(name):
         move_options_text("refresh")
     elif leaf == "new_game":
         global new_type_toggle, new_game_monster_description, new_game_name
-        new_type_toggle = tp.TogglablesPool("Character Types", ("Taurian", "Dark Elf"), "Taurian")
+        new_type_toggle = tp.TogglablesPool("Character Types", ("Taurian", "Dark Elf", "Skeleton"), "Taurian")
         new_type_toggle.at_unclick=change_character_type
 
         save_back_to_menu_button = tp.Button("Back to Main Menu")
@@ -280,7 +280,7 @@ def move_options_text(direction):
 def change_character_type():
     if new_type_toggle.get_value() != "":
         Save["character_type"] = new_type_toggle.get_value().lower()
-        print(Save["character_type"].capitalize()+" chosen")
+        print(Save["character_type"].title()+" chosen")
         new_game_monster_description.set_text(Types["monster"][Save["character_type"]]["description"], max_width=400)
 
 monster_tile_size_min = 32
@@ -310,6 +310,13 @@ Types = {
             "img_max": load_tile("gfx/dark_elf.png", monster_tile_size_max),
             "hp": 100,
             "description": "Dark elf is a frost mage that's all I know for sure. wazaal is happening all over the place wazaal is happening all over the place wazaal is happening all over the place wazaal is happening all over the place wazaal is happening all over the place comprentos amores montecarlos place comprentos amores montecarlos place comprentos amores montecarlosplace comprentos amores montecarlosplace comprentos amores ads 244 with robot sonic 5556  vads 244 with robot sonic 5556  ads 244 with robot sonic 5556 "
+        },
+        "skeleton": {
+            "img_min": load_tile("gfx/skeleton.png", monster_tile_size_min),
+            "img_med": load_tile("gfx/skeleton.png", monster_tile_size_med),
+            "img_max": load_tile("gfx/skeleton.png", monster_tile_size_max),
+            "hp": 100,
+            "description": "This is the vanilla version on github. Derivatives must be clearly labeled as such. Basically a gladiator simulator. Here's some stream of consciousness crap that may not all exist: In this game you are a gladiator in your team of computer gladiators. They fight automatically and you fight on their side. The team leadership issues you equipment and spells and also own money which can be used to buy more equipment or go to a bar with the computer gladiators from your team or others'. The more they are friends"
         }
     }
 }
@@ -401,7 +408,7 @@ while running:
     elif leaf == "new_game":
         screen.blit(new_game_logo, (screen_width/2-new_game_logo_width/2, screen_height*0.085))
         img = Types["monster"][Save["character_type"]]["img_max"]
-        w,h = img.get_size()
+        w,h = monster_tile_size_max, monster_tile_size_max
         screen.blit(img, (screen_width/2-w, screen_height/2-40))
 
         if new_type_toggle.get_value().lower() != Save["character_type"]:
