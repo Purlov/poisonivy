@@ -441,7 +441,7 @@ Types = {
             "img_med": load_tile("gfx/cyclops.png", monster_tile_size_med),
             "img_max": load_tile("gfx/cyclops.png", monster_tile_size_max),
             "hp": 100,
-            "description": "Cyclopes are really good at lore. That makes them respect unique weapons and armour which are usually not the powerfullest ones. Their tactic is to attack in heavy armour, maybe even a shield. Unique ones at that. Sometimes when a Cyclops is killed they can see the future which means that a random member in the fight dies."
+            "description": "Cyclopes are really good at lore. That makes them respect unique weapons and armour which are usually not the most powerful ones. Their tactic is to attack in heavy armour, maybe even a shield. Unique ones at that. Sometimes when a Cyclops is killed they can see the future which means that a random member in the fight dies."
         }
     }
 }
