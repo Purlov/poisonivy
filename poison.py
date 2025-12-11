@@ -3,6 +3,8 @@
 GAME_FPS = 144
 LICENSES2 = "David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm" # update from LICENSES.txt
 LICENSES = "David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm\n\n\nThese next ones are just to show the functionality copied from my old games\n\nRed outfit for main character - graphics/charright & left.png\nhttps://opengameart.org/content/occupational-icons\nhttps://opengameart.org/users/technopeasant - Graham L. Wilson (technopeasant)\nTiles have been drawn by David E. Gervais, and are published under the Creative Commons license.\nYou are free to copy, distribute and transmit those tiles as long as you credit David Gervais as their creator.\nCC-BY 3.0\nhttp://creativecommons.org/licenses/by/3.0/\n\n\nA sand road - graphics/road2.png\nhttps://opengameart.org/content/pixel-art-top-down-tileset\nFrom user https://opengameart.org/users/dustdfg - Yevhen Babiichuk (DustDFG)\nCC-BY-SA 4.0\nhttps://creativecommons.org/licenses/by-sa/4.0/\n\n\nGold stuff in the Main Menu background\nhttps://opengameart.org/content/gold-treasure-icons-16x16s\nFrom user https://opengameart.org/users/bonsaiheldin - Bonsaiheldin"
+TEAM_NUMBER = 7
+MEMBER_NUMBER = 6
 
 import pygame, thorpy as tp
 from functools import partial
@@ -403,15 +405,22 @@ def color_tiles(i):
         processed_images[0].append(processed1)
         processed_images[0].append(processed2)
         processed_images[0].append(processed3)
+    else:
+        color = (random.randrange(0,256), random.randrange(0,256), random.randrange(0,256))
+
+        hue = rgb_to_hue_branchless(color[0], color[1], color[2])
+        
+        processed1 = recolor_surface(Types["monster"][Save["character_type"]]["img_min"], hue)
+        processed2 = recolor_surface(Types["monster"][Save["character_type"]]["img_med"], hue)
+        processed3 = recolor_surface(Types["monster"][Save["character_type"]]["img_max"], hue)
+
+        processed_images[0] = []
+        processed_images[0].append(processed1)
+        processed_images[0].append(processed2)
+        processed_images[0].append(processed3)
 
 def load_tile(img, size):
     return pygame.transform.scale(pygame.image.load(img), (size,)*2)
-
-Save = {
-    "identifier": random.randint(1111,8888),
-    "character_name": "",
-    "character_type": "taurian",
-}
 
 Types = {
     "monster": {
@@ -443,6 +452,20 @@ Types = {
             "hp": 100,
             "description": "Cyclopes are really good at lore. That makes them respect unique weapons and armour which are usually not the most powerful ones. Their tactic is to attack in heavy armour, maybe even a shield. Unique ones at that. Sometimes when a Cyclops is killed they can see the future which means that a random member in the fight dies."
         }
+    }
+}
+
+all_types = list(Types["monster"].keys())
+npc_types = []
+for i in range(TEAM_NUMBER*MEMBER_NUMBER-1):
+    npc_types.append(all_types[random.randrange(0,len(all_types))])
+
+Save = {
+    "identifier": random.randint(1111,8888),
+    "character_name": "",
+    "character_type": "taurian",
+    "npcs": {
+        "types": npc_types
     }
 }
 
