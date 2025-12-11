@@ -130,6 +130,13 @@ def exit_game():
     if alert.choice == "Yes":
             running = False
 
+Save = {
+    "identifier": random.randint(1111,8888),
+    "character_name": "",
+    "character_type": "taurian",
+    "npc": [[]]
+}
+
 def change_window(name):
     global updater
     global leaf 
@@ -247,7 +254,8 @@ def change_window(name):
 
         move_options_text("refresh")
     elif leaf == "new_game":
-        global new_type_toggle, new_game_monster_description, new_game_name, new_game_color_picker
+        global new_type_toggle, new_game_monster_description, new_game_name, new_game_color_picker, Save, npc_types
+        
         new_type_toggle = tp.TogglablesPool("Character Types", ("Taurian", "Dark Elf", "Skeleton", "Cyclops"), Save["character_type"].title())
         #new_type_toggle.at_unclick=change_character_type #commented since it is watched in the main loop
 
@@ -275,8 +283,6 @@ def change_window(name):
         #new_game_color_picker.at_cancel=partial(color_tiles, 0) #watched in main loop
         new_game_color_picker.set_value(old_char_color)
 
-        color_tiles(0)
-
         image_and_text = tp.Group([new_game_color_picker,padder1,new_game_monster_description], "h")
         
         padder2 = tp.Text("\n"*2, font_size=24)
@@ -285,6 +291,24 @@ def change_window(name):
         main_group = tp.Group([save_all], "h")
         main_group.sort_children(gap=20)
         main_group.center_on(screen)
+
+        all_types = list(Types["monster"].keys())
+        npc_types = []
+        for i in range(TEAM_NUMBER*MEMBER_NUMBER):
+            npc_types.append(all_types[random.randrange(0,len(all_types))])
+            color_tiles(i)
+        npc_types[0] = Save["character_type"]
+
+        npc_images=[[]] # 1,2,3
+
+        Save["npc"] = []
+        Save["npc"].append(npc_types)
+        Save["npc"].append(processed_images)
+
+        for i in range(len(npc_types)):
+            print(npc_types)
+
+        color_tiles(0)
         
     updater = main_group.get_updater()
 
@@ -356,7 +380,6 @@ def recolor_surface(surface, target_hue):
             # Replace hue but keep saturation/value
             nr, ng, nb = hsv_to_rgb(target_hue, s, v)
             surface.set_at((x, y), (nr, ng, nb, a))
-    return surface
 
 def rgb_to_hue_branchless(r, g, b):
         # Normalize to [0,1]
@@ -388,6 +411,9 @@ monster_tile_size_max = 155
 processed_images = [[]]
 
 old_char_color = (255,255,255,255)
+processed_images = []
+for i in range(TEAM_NUMBER*MEMBER_NUMBER):
+    processed_images.append(0)
 
 def color_tiles(i):
     global old_char_color,processed_images
@@ -396,28 +422,34 @@ def color_tiles(i):
         old_char_color = new_game_color_picker.get_value()
 
         hue = rgb_to_hue_branchless(old_char_color[0], old_char_color[1], old_char_color[2])
-        
-        processed1 = recolor_surface(Types["monster"][Save["character_type"]]["img_min"], hue)
-        processed2 = recolor_surface(Types["monster"][Save["character_type"]]["img_med"], hue)
-        processed3 = recolor_surface(Types["monster"][Save["character_type"]]["img_max"], hue)
+        new_image1 = Types["monster"][Save["character_type"]]["img_min"]
+        new_image2 = Types["monster"][Save["character_type"]]["img_med"]
+        new_image3 = Types["monster"][Save["character_type"]]["img_max"]
+        recolor_surface(new_image1, hue)
+        recolor_surface(new_image2, hue)
+        recolor_surface(new_image3, hue)
 
         processed_images[0] = []
-        processed_images[0].append(processed1)
-        processed_images[0].append(processed2)
-        processed_images[0].append(processed3)
+        processed_images[0].append(new_image1)
+        processed_images[0].append(new_image2)
+        processed_images[0].append(new_image3)
     else:
         color = (random.randrange(0,256), random.randrange(0,256), random.randrange(0,256))
 
         hue = rgb_to_hue_branchless(color[0], color[1], color[2])
-        
-        processed1 = recolor_surface(Types["monster"][Save["character_type"]]["img_min"], hue)
-        processed2 = recolor_surface(Types["monster"][Save["character_type"]]["img_med"], hue)
-        processed3 = recolor_surface(Types["monster"][Save["character_type"]]["img_max"], hue)
 
-        processed_images[0] = []
-        processed_images[0].append(processed1)
-        processed_images[0].append(processed2)
-        processed_images[0].append(processed3)
+        new_image1 = Types["monster"][npc_types[i]]["img_min"]
+        new_image2 = Types["monster"][npc_types[i]]["img_med"]
+        new_image3 = Types["monster"][npc_types[i]]["img_max"]
+        
+        recolor_surface(new_image1, hue)
+        recolor_surface(new_image2, hue)
+        recolor_surface(new_image3, hue)
+
+        processed_images[i] = []
+        processed_images[i].append(new_image1)
+        processed_images[i].append(new_image2)
+        processed_images[i].append(new_image3)
 
 def load_tile(img, size):
     return pygame.transform.scale(pygame.image.load(img), (size,)*2)
@@ -452,20 +484,6 @@ Types = {
             "hp": 100,
             "description": "Cyclopes are really good at lore. That makes them respect unique weapons and armour which are usually not the most powerful ones. Their tactic is to attack in heavy armour, maybe even a shield. Unique ones at that. Sometimes when a Cyclops is killed they can see the future which means that a random member in the fight dies."
         }
-    }
-}
-
-all_types = list(Types["monster"].keys())
-npc_types = []
-for i in range(TEAM_NUMBER*MEMBER_NUMBER-1):
-    npc_types.append(all_types[random.randrange(0,len(all_types))])
-
-Save = {
-    "identifier": random.randint(1111,8888),
-    "character_name": "",
-    "character_type": "taurian",
-    "npcs": {
-        "types": npc_types
     }
 }
 
