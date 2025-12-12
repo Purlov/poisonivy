@@ -2,7 +2,7 @@
 
 GAME_FPS = 144
 LICENSES2 = "David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm" # update from LICENSES.txt
-LICENSES = "David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm\n\n\nThese next ones are just to show the functionality copied from my old games\n\nRed outfit for main character - graphics/charright & left.png\nhttps://opengameart.org/content/occupational-icons\nhttps://opengameart.org/users/technopeasant - Graham L. Wilson (technopeasant)\nTiles have been drawn by David E. Gervais, and are published under the Creative Commons license.\nYou are free to copy, distribute and transmit those tiles as long as you credit David Gervais as their creator.\nCC-BY 3.0\nhttp://creativecommons.org/licenses/by/3.0/\n\n\nA sand road - graphics/road2.png\nhttps://opengameart.org/content/pixel-art-top-down-tileset\nFrom user https://opengameart.org/users/dustdfg - Yevhen Babiichuk (DustDFG)\nCC-BY-SA 4.0\nhttps://creativecommons.org/licenses/by-sa/4.0/\n\n\nGold stuff in the Main Menu background\nhttps://opengameart.org/content/gold-treasure-icons-16x16s\nFrom user https://opengameart.org/users/bonsaiheldin - Bonsaiheldin"
+LICENSES = 'David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm\n\n\nThorpy GUI library\n\nMIT License\n\nCopyright (c) 2023 Yann Thorimbert\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the "Software"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.'
 TEAM_NUMBER = 7
 MEMBER_NUMBER = 6
 
@@ -264,11 +264,11 @@ def change_window(name):
         save_back_to_menu_button.at_unclick=partial(change_window, "main_menu")
         save_back_to_menu_button.generate_shadow(fast=True)
 
-        start_the_game_button = tp.Button("Start the Game")
-        start_the_game_button.at_unclick=partial(change_window, "lobby")
-        start_the_game_button.generate_shadow(fast=True)
+        choose_star_sign = tp.Button("Choose Star Sign")
+        choose_star_sign.at_unclick=partial(change_window, "star_sign")
+        choose_star_sign.generate_shadow(fast=True)
 
-        bottom_buttons = tp.Group([start_the_game_button, save_back_to_menu_button], "h")
+        bottom_buttons = tp.Group([choose_star_sign, save_back_to_menu_button], "h")
 
         new_game_name = tp.TextInput(Save["character_name"], placeholder="Can be changed later")
         new_game_name.at_cancel=save_written_name
@@ -554,6 +554,9 @@ Types = {
             "hp": 100,
             "description": "Cyclopes are really good at lore. That makes them respect unique weapons and armour which are usually not the most powerful ones. Their tactic is to attack in heavy armour, maybe even a shield. Unique ones at that. Sometimes when a Cyclops is killed they can see the future which means that a random member in the fight dies."
         }
+    },
+    "star sign": { 
+        "black cat": ""
     }
 }
 
