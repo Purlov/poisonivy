@@ -634,7 +634,7 @@ Types = {
 
 saved_rgb = []
 def save_game(number):
-    if went_through_new_game == True:
+    if went_through_new_game == True or loaded_game == True:
         prompt = tp.TextInput("", "Enter Save Name")
         alert = tp.AlertWithChoices("Saving Game", ("Yes", "No"), text="Do you wish to save into this slot?\nOld save is formatted.", children=[prompt])
         alert.generate_shadow(fast=False) 
@@ -654,8 +654,9 @@ def save_game(number):
 
             change_window("save_game")
 
+loaded_game = False
 def load_game(number):
-    global Save, processed_images, saved_rgb
+    global Save, processed_images, saved_rgb, loaded_game
     alert = tp.AlertWithChoices("Loading Game", ("Yes", "No"), text="Do you wish to load this slot?\nUnsaved progress is lost.")
     alert.generate_shadow(fast=False) 
     alert.launch_alone(click_outside_cancel=False) # it would accidentally click other buttons
@@ -670,6 +671,7 @@ def load_game(number):
                 for i in range(TEAM_NUMBER*MEMBER_NUMBER):
                     color_tiles_memory(i)
                 Save["npc"][1] = processed_images
+                loaded_game = True
 
 change_window("main_menu")
 
