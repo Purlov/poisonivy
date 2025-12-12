@@ -274,14 +274,51 @@ def change_window(name):
         new_game_name_descr = tp.Text("Character Name")
         new_game_namers = tp.Group([new_game_name_descr, new_game_name], "h")
         #padder = tp.Text("\n"*10, font_size=24)
-        padder1 = tp.Text((" "*40+"\n")*11, font_size=24)
+        padder1 = tp.Text((" "*35+"\n")*11, font_size=24)
         new_game_monster_description = tp.Text(Types["monster"][Save["character_type"]]["description"], max_width=400)
 
         #change_character_type()
 
-        new_game_color_picker = tp.ColorPicker()
+        colors = []
+
+        # Step size reduced to 20 → double the colors
+        step = 20  
+
+        # Red → Yellow (R fixed at 255, G increases)
+        for g in range(0, 201, step):
+            colors.append((255, g, 0))
+
+        # Yellow → Green (G fixed at 255, R decreases)
+        for r in range(200, -1, -step):
+            colors.append((r, 255, 0))
+
+        # Green → Cyan (G fixed at 255, B increases)
+        for b in range(0, 201, step):
+            colors.append((0, 255, b))
+
+        # Cyan → Blue (B fixed at 255, G decreases)
+        for g in range(200, -1, -step):
+            colors.append((0, g, 255))
+
+        # Blue → Magenta (B fixed at 255, R increases)
+        for r in range(0, 201, step):
+            colors.append((r, 0, 255))
+
+        # Magenta → Red (R fixed at 255, B decreases)
+        for b in range(200, -1, -step):
+            colors.append((255, 0, b))
+
+        # Shuffle into random order
+        random.shuffle(colors)
+
+        # Shuffle into random order
+        random.shuffle(colors)
+
+        new_game_color_picker = tp.ColorPickerPredefined(
+            colors=colors
+        )
         #new_game_color_picker.at_cancel=partial(color_tiles, 0) #watched in main loop
-        new_game_color_picker.set_value(old_char_color)
+        ##new_game_color_picker.set_value(old_char_color)
 
         image_and_text = tp.Group([new_game_color_picker,padder1,new_game_monster_description], "h")
         
@@ -312,6 +349,15 @@ def change_window(name):
         for i in range(len(npc_types)):
             print(npc_types[i])
             print(npc_names[i])
+
+    elif leaf == "lobby":
+        own_team_buttons = []
+        for i in range(MEMBER_NUMBER):
+            own_team_buttons.append()
+        
+        main_group = tp.Group([save_all], "h")
+        main_group.sort_children(gap=20)
+        main_group.center_on(screen)
         
     updater = main_group.get_updater()
 
@@ -595,7 +641,7 @@ while running:
         screen.blit(new_game_logo, (screen_width/2-new_game_logo_width/2, screen_height*0.085))
         img = processed_images[0][2]
         #w,h = monster_tile_size_max, monster_tile_size_max
-        screen.blit(img, (screen_width/2+15, screen_height/2-40))
+        screen.blit(img, (screen_width/3+82, screen_height/2-40))
 
         if new_type_toggle.get_value().lower() != Save["character_type"]:
             change_character_type()
