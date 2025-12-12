@@ -1,7 +1,6 @@
 """We show here how to generate and binds a shadow to an element."""
 
-GAME_FPS = 144
-LICENSES2 = "David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm" # update from LICENSES.txt
+GAME_FPS = 200
 LICENSES = 'David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm\n\n\nThorpy GUI library\n\nMIT License\n\nCopyright (c) 2023 Yann Thorimbert\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the "Software"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.'
 TEAM_NUMBER = 7
 MEMBER_NUMBER = 6
@@ -112,6 +111,14 @@ dark_elf = pygame.image.load("gfx/dark_elf.png")
 dark_elf_main_scaled = pygame.transform.scale(dark_elf, (55, 55))
 dark_elf_main_width, dark_elf_main_height = 55, 55
 
+star_sign_logo = pygame.image.load("gfx/star_sign.png")
+star_sign_logo_processed = star_sign_logo
+star_sign_icon = pygame.image.load("gfx/star.png")
+w,h = star_sign_icon.get_size()
+star_sign_icon_rect = star_sign_icon.get_rect(center=(w/2, h/2))
+star_sign_icon_processed = star_sign_icon
+star_sign_icon_processed_rect = pygame.Rect(0, 0, 0, 0)
+
 normal_font = pygame.font.Font(None, 32)
 
 gladiator_text = normal_font.render("THE Gladiator", True, pygame.Color(0, 0, 0, a=140), None)
@@ -138,6 +145,7 @@ Save = {
     "npc": [[]]
 }
 
+went_through_new_game = False
 def change_window(name):
     global updater
     global leaf 
@@ -255,7 +263,7 @@ def change_window(name):
 
         move_options_text("refresh")
     elif leaf == "new_game":
-        global new_type_toggle, new_game_monster_description, new_game_name, new_game_color_picker, Save, npc_types
+        global new_type_toggle, new_game_monster_description, new_game_name, new_game_color_picker, Save, npc_types, saved_rgb, went_through_new_game
         
         new_type_toggle = tp.TogglablesPool("Character Types", ("Taurian", "Dark Elf", "Skeleton", "Cyclops"), Save["character_type"].title())
         #new_type_toggle.at_unclick=change_character_type #commented since it is watched in the main loop
@@ -333,12 +341,13 @@ def change_window(name):
         all_types = list(Types["monster"].keys())
         npc_types = []
         npc_names = []
+        saved_rgb = []
         for i in range(TEAM_NUMBER*MEMBER_NUMBER):
             npc_types.append(all_types[random.randrange(0,len(all_types))])
             color_tiles(i)
             npc_names.append(name_generator())
         npc_types[0] = Save["character_type"]
-        color_tiles(0)
+        color_tiles(-1)
         if Save["character_name"] != "":
             npc_names[0] = Save["character_name"]
 
@@ -347,9 +356,23 @@ def change_window(name):
         Save["npc"].append(processed_images)
         Save["npc"].append(npc_names)
 
+        #Save["npc"][0][0] #first npc_type
+        #Save["npc"][1][TEAMS*MEMBERS][2] #last_npc_images_2biggest
+        #Save["npc"][2][0] #first npc name, yours
+
         for i in range(len(npc_types)):
             print(npc_types[i])
             print(npc_names[i])
+
+        went_through_new_game = True
+
+    elif leaf == "star_sign":
+        black_cat_button = tp.Button("Choose Black Cat")
+        black_cat_button.at_unclick=partial(choose_sign, "black cat")
+
+        main_group = tp.Group([black_cat_button], "h")
+        main_group.sort_children(gap=20)
+        main_group.center_on(screen)
 
     elif leaf == "lobby":
         own_team_buttons = []
@@ -361,6 +384,9 @@ def change_window(name):
         main_group.center_on(screen)
         
     updater = main_group.get_updater()
+
+def choose_sign(name):
+    a =1
 
 def save_written_name():
     Save["character_name"] = new_game_name.get_value()
@@ -483,10 +509,20 @@ for i in range(TEAM_NUMBER*MEMBER_NUMBER):
     processed_images.append(0)
 
 def color_tiles(i):
-    global old_char_color,processed_images
+    global old_char_color,processed_images, saved_rgb
+
+    saved_earlier = False
+
+    if  i == -1:
+        saved_rgb[0] = new_game_color_picker.get_value()
+        saved_earlier = True
+        i = 0
 
     if i == 0:
         old_char_color = new_game_color_picker.get_value()
+
+        if not saved_earlier: 
+            saved_rgb.append(old_char_color)
 
         hue = rgb_to_hue_branchless(old_char_color[0], old_char_color[1], old_char_color[2])
         new_image1 = Types["monster"][Save["character_type"]]["img_min"]
@@ -506,6 +542,8 @@ def color_tiles(i):
     else:
         color = (random.randrange(0,256), random.randrange(0,256), random.randrange(0,256))
 
+        saved_rgb.append(color)
+
         hue = rgb_to_hue_branchless(color[0], color[1], color[2])
 
         new_image1 = Types["monster"][npc_types[i]]["img_min"]
@@ -520,6 +558,24 @@ def color_tiles(i):
         processed_images[i].append(new_image1)
         processed_images[i].append(new_image2)
         processed_images[i].append(new_image3)
+
+def color_tiles_memory(i):
+    global processed_images
+
+    color = saved_rgb[i]
+    print(str(saved_rgb)+"\n")
+
+    hue = rgb_to_hue_branchless(color[0], color[1], color[2])
+
+    new_image1 = Types["monster"][Save["npc"][0][i]]["img_min"]
+    new_image2 = Types["monster"][Save["npc"][0][i]]["img_med"]
+    new_image3 = Types["monster"][Save["npc"][0][i]]["img_max"]
+    
+    recolor_surface(new_image1, hue)
+    recolor_surface(new_image2, hue)
+    recolor_surface(new_image3, hue)
+    
+    processed_images.append((new_image1, new_image2, new_image3))
 
 def load_tile(img, size):
     return pygame.transform.scale(pygame.image.load(img), (size,)*2)
@@ -556,32 +612,39 @@ Types = {
         }
     },
     "star sign": { 
-        "black cat": ""
+        "black cat": {
+            "img_min": load_tile("gfx/black_cat.gif", monster_tile_size_min),
+            "img_med": load_tile("gfx/black_cat.gif", monster_tile_size_med),
+            "img_max": load_tile("gfx/black_cat.gif", monster_tile_size_max),
+            "description": "A black cat is all about luck. When you happen to see a black cat under stairs or something it needs luck. Affects the all around game not just the dodge of Taurians and crap."
+        }
     }
 }
 
+saved_rgb = []
 def save_game(number):
-    global Save # wat up
-    prompt = tp.TextInput("", "Enter Save Name")
-    alert = tp.AlertWithChoices("Saving Game", ("Yes", "No"), text="Do you wish to save into this slot?\nOld save is formatted.", children=[prompt])
-    alert.generate_shadow(fast=False) 
-    alert.launch_alone(click_outside_cancel=False) # it would accidentally click other buttons
-    if alert.choice == "Yes":
-        save_names[number] = prompt.get_value()
-        print("Saving to slot "+str(number)+" with the slot name "+prompt.get_value())
-        with open("save/save_names", "wb") as file:
-            pickled = pickle.dumps(save_names)
-            compressed = lzma.compress(pickled)
-            file.write(compressed)
-        with open("save/save"+str(number), "wb") as file:
-            pickled = pickle.dumps(Save)
-            compressed = lzma.compress(pickled)
-            file.write(compressed)
+    if went_through_new_game == True:
+        prompt = tp.TextInput("", "Enter Save Name")
+        alert = tp.AlertWithChoices("Saving Game", ("Yes", "No"), text="Do you wish to save into this slot?\nOld save is formatted.", children=[prompt])
+        alert.generate_shadow(fast=False) 
+        alert.launch_alone(click_outside_cancel=False) # it would accidentally click other buttons
+        if alert.choice == "Yes":
+            Save["npc"][1] = saved_rgb
+            save_names[number] = prompt.get_value()
+            print("Saving to slot "+str(number)+" with the slot name "+prompt.get_value())
+            with open("save/save_names", "wb") as file:
+                pickled = pickle.dumps(save_names)
+                compressed = lzma.compress(pickled)
+                file.write(compressed)
+            with open("save/save"+str(number), "wb") as file:
+                pickled = pickle.dumps(Save)
+                compressed = lzma.compress(pickled)
+                file.write(compressed)
 
-        change_window("save_game")
+            change_window("save_game")
 
 def load_game(number):
-    global Save
+    global Save, processed_images, saved_rgb
     alert = tp.AlertWithChoices("Loading Game", ("Yes", "No"), text="Do you wish to load this slot?\nUnsaved progress is lost.")
     alert.generate_shadow(fast=False) 
     alert.launch_alone(click_outside_cancel=False) # it would accidentally click other buttons
@@ -591,6 +654,11 @@ def load_game(number):
             with open("save/save"+str(number), "rb") as file:
                 decompressed = lzma.decompress(file.read())
                 Save = pickle.loads(decompressed)
+                saved_rgb = Save["npc"][1]
+                processed_images = []
+                for i in range(TEAM_NUMBER*MEMBER_NUMBER):
+                    color_tiles_memory(i)
+                Save["npc"][1] = processed_images
 
 change_window("main_menu")
 
@@ -608,6 +676,11 @@ def before_gui():
         a = 1
 tp.call_before_gui(before_gui)
 
+slow_animation = round(GAME_FPS/40) 
+
+star_sign_icon_rotation = 0
+star_sign_logo_time = 0
+
 running = True
 while running:
     for event in pygame.event.get():
@@ -620,7 +693,7 @@ while running:
 
     screen.fill((150,150,150)) # Clear screen
 
-    fps_text = normal_font.render("FPS = "+str(round(clock.get_fps()))+" MIN_TARGET = "+str(GAME_FPS), True, pygame.Color(255, 165, 0, a=140), None)
+    fps_text = normal_font.render("FPS = "+str(round(clock.get_fps()))+" / "+str(GAME_FPS), True, pygame.Color(255, 165, 0, a=140), None)
     screen.blit(fps_text,(10,10))
     debug_text = normal_font.render("Save identifier="+str(Save["identifier"]), True, pygame.Color(255, 165, 0, a=140), None)
     debug_text_w, debug_text_h = loading_text.get_size()
@@ -655,6 +728,24 @@ while running:
 
         if new_game_color_picker.get_value() != old_char_color:
             color_tiles(0)
+    elif leaf == "star_sign":
+        screen.blit(star_sign_logo_processed, (screen_width/2-star_sign_logo_processed.get_width()/2, screen_height*0.085))
+        #star_sign_icon_processed_rect.x = screen_width/2-star_sign_logo_processed.get_width()/2-120
+        #star_sign_icon_processed_rect.y = screen_height*0.085
+        star_sign_icon_processed_rect.center = (screen_width/2-star_sign_logo_processed.get_width()/2, screen_height*0.18)
+        screen.blit(star_sign_icon_processed, star_sign_icon_processed_rect)
+
+        screen.blit(Types["star sign"]["black cat"]["img_max"], (10, 160))
+
+        star_sign_logo_time = star_sign_logo_time + 2
+        if star_sign_logo_time > slow_animation:
+            star_sign_logo_time = 0
+            star_sign_icon_rotation = star_sign_icon_rotation + 0.5
+            if star_sign_icon_rotation >= 360:
+                star_sign_icon_rotation = 0
+
+            star_sign_icon_processed = pygame.transform.rotate(star_sign_icon,-star_sign_icon_rotation)
+            star_sign_icon_processed_rect = star_sign_icon_processed.get_rect(center=star_sign_icon_rect.center)
 
     updater.update(events=pygame.event.get(), mouse_rel=pygame.mouse.get_rel())
 
