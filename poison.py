@@ -99,6 +99,7 @@ logo_width, logo_height = logo.get_size()
 
 new_game_logo = pygame.image.load("gfx/new_game_logo.png")
 new_game_logo_width, new_game_logo_height = new_game_logo.get_size()
+new_game_logo_processed = new_game_logo
 
 icon_main_scaled = pygame.transform.scale(icon, (150, 150))
 icon_main_width, icon_main_height = 150, 150
@@ -495,6 +496,9 @@ def color_tiles(i):
         recolor_surface(new_image2, hue)
         recolor_surface(new_image3, hue)
 
+        new_game_logo_processed = new_game_logo
+        recolor_surface(new_game_logo_processed, hue)
+
         processed_images[0] = []
         processed_images[0].append(new_image1)
         processed_images[0].append(new_image2)
@@ -638,7 +642,7 @@ while running:
         pygame.draw.rect(screen, (50,50,250), (screen_width/2-logo_width/2-icon_main_width-25, screen_height*0.085+icon_main_height+25,1000,400))
         #screen_width/2-logo_width/2-icon_main_width-25, screen_height*0.085+icon_main_height+25
     elif leaf == "new_game":
-        screen.blit(new_game_logo, (screen_width/2-new_game_logo_width/2, screen_height*0.085))
+        screen.blit(new_game_logo_processed, (screen_width/2-new_game_logo_width/2, screen_height*0.085))
         img = processed_images[0][2]
         #w,h = monster_tile_size_max, monster_tile_size_max
         screen.blit(img, (screen_width/3+82, screen_height/2-40))
