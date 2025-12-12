@@ -307,13 +307,11 @@ def change_window(name):
         Save["npc"] = []
         Save["npc"].append(npc_types)
         Save["npc"].append(processed_images)
+        Save["npc"].append(npc_names)
 
         for i in range(len(npc_types)):
             print(npc_types[i])
-        print(npc_names[random.randrange(len(npc_names))])
-        print(npc_names[random.randrange(len(npc_names))])
-        print(npc_names[random.randrange(len(npc_names))])
-        print(npc_names[random.randrange(len(npc_names))])
+            print(npc_names[i])
         
     updater = main_group.get_updater()
 
