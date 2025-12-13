@@ -147,6 +147,7 @@ Save = {
 
 went_through_lobby = False
 def change_window(name):
+    global went_through_lobby
     global updater
     global leaf 
     leaf = name
@@ -157,10 +158,14 @@ def change_window(name):
         alert.launch_alone(click_outside_cancel=False) # it would accidentally click other buttons
         if alert.choice == "No":
             leaf = "main_menu"
+    elif leaf == "continue":
+        if went_through_lobby == False and loaded_game == False:
+            leaf = "main_menu"
         
     if leaf == "main_menu":
         main_menu_objects = []
         main_menu_objects.append(tp.Button("Continue Game"))
+        main_menu_objects[len(main_menu_objects)-1].at_unclick=partial(change_window, "continue")
         main_menu_objects[len(main_menu_objects)-1].generate_shadow(fast=True)
         main_menu_objects.append(tp.Button("New Game"))
         main_menu_objects[len(main_menu_objects)-1].at_unclick=partial(change_window, "new_game")
@@ -383,8 +388,10 @@ def change_window(name):
         main_group.sort_children(gap=20)
         main_group.center_on(screen)
 
+    elif leaf == "debug":
+        a = 1
+
     elif leaf == "lobby":
-        global went_through_lobby
         own_team_buttons = []
         for i in range(MEMBER_NUMBER):
             own_team_buttons.append()
