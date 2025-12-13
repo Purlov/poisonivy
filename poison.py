@@ -1,7 +1,7 @@
 """We show here how to generate and binds a shadow to an element."""
 
 GAME_FPS = 200
-LICENSES = 'David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm\n\n\nThorpy GUI library\n\nMIT License\n\nCopyright (c) 2023 Yann Thorimbert\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the "Software"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.'
+LICENSES = 'David E. Gervais drawn tiles library has many of these tiles the game is using, like the man in the main menu\nIt is published under CC BY 3.0\nhttp://pousse.rapiere.free.fr/tome/tome-tiles.htm\n\n\nThorpy GUI library\n\nMIT License\n\nCopyright (c) 2023 Yann Thorimbert\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the "Software"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n\n\nObsidian Serpent Star Sign image\nBy basxto and yolkati\nCC BY-SA 4.0\nhttps://opengameart.org/content/giant-snake'
 TEAM_NUMBER = 7
 MEMBER_NUMBER = 6
 
@@ -391,17 +391,17 @@ def change_window(name):
         image_padding = tp.Text(" "*13, font_size=24)
         #padding_v1= tp.Text("\n"*6, font_size=24)
         black_cat_button = tp.Button("Choose Black Cat")
-        black_cat_button.at_unclick=partial(first_time_lobby, "black cat")
+        black_cat_button.at_unclick=partial(change_window, "star_sign")
         black_cat_button.generate_shadow(fast=True)
-        black_cat_button2 = tp.Button("Choose Black Cat")
-        black_cat_button2.at_unclick=partial(first_time_lobby, "black cat")
-        black_cat_button2.generate_shadow(fast=True)
-        black_cat_button3 = tp.Button("Choose Black Cat")
-        black_cat_button3.at_unclick=partial(first_time_lobby, "black cat")
-        black_cat_button3.generate_shadow(fast=True)
-        black_cat_button4 = tp.Button("Choose Black Cat")
-        black_cat_button4.at_unclick=partial(first_time_lobby, "black cat")
-        black_cat_button4.generate_shadow(fast=True)
+        obsidian_serpent_button = tp.Button("Choose Obsidian Serpent")
+        obsidian_serpent_button.at_unclick=partial(first_time_lobby, "obsidian serpent")
+        obsidian_serpent_button.generate_shadow(fast=True)
+        iron_helm_button = tp.Button("Choose The Iron Helm")
+        iron_helm_button.at_unclick=partial(first_time_lobby, "iron helm")
+        iron_helm_button.generate_shadow(fast=True)
+        ember_crown_button = tp.Button("Choose Ember Crown")
+        ember_crown_button.at_unclick=partial(first_time_lobby, "ember crown")
+        ember_crown_button.generate_shadow(fast=True)
         black_cat_button5 = tp.Button("Choose Black Cat")
         black_cat_button5.at_unclick=partial(first_time_lobby, "black cat")
         black_cat_button5.generate_shadow(fast=True)
@@ -413,15 +413,15 @@ def change_window(name):
         black_cat_text = tp.Text(Types["star sign"]["black cat"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
         black_cat_text.set_bck_color(random_bright_nonpurple_color())
         black_cat_text.generate_shadow(fast=True)
-        black_cat_text2 = tp.Text(Types["star sign"]["black cat"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
-        black_cat_text2.set_bck_color(random_bright_nonpurple_color())
-        black_cat_text2.generate_shadow(fast=True)
-        black_cat_text3 = tp.Text(Types["star sign"]["black cat"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
-        black_cat_text3.set_bck_color(random_bright_nonpurple_color())
-        black_cat_text3.generate_shadow(fast=True)
-        black_cat_text4 = tp.Text(Types["star sign"]["black cat"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
-        black_cat_text4.set_bck_color(random_bright_nonpurple_color())
-        black_cat_text4.generate_shadow(fast=True)
+        obsidian_serpent_text = tp.Text(Types["star sign"]["obsidian serpent"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
+        obsidian_serpent_text.set_bck_color(random_bright_nonpurple_color())
+        obsidian_serpent_text.generate_shadow(fast=True)
+        iron_helm_text = tp.Text(Types["star sign"]["iron helm"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
+        iron_helm_text.set_bck_color(random_bright_nonpurple_color())
+        iron_helm_text.generate_shadow(fast=True)
+        ember_crown_text = tp.Text(Types["star sign"]["ember crown"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
+        ember_crown_text.set_bck_color(random_bright_nonpurple_color())
+        ember_crown_text.generate_shadow(fast=True)
         black_cat_text5 = tp.Text(Types["star sign"]["black cat"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
         black_cat_text5.set_bck_color(random_bright_nonpurple_color())
         black_cat_text5.generate_shadow(fast=True)
@@ -432,14 +432,14 @@ def change_window(name):
         black_cat_text_and_button = tp.Group([black_cat_text, black_cat_button], "v")
         black_cat_group = tp.Group([image_padding,black_cat_text_and_button], "h")
 
-        black_cat_text_and_button2 = tp.Group([black_cat_text2, black_cat_button2], "v")
-        black_cat_group2 = tp.Group([image_padding,black_cat_text_and_button2], "h")
+        obsidian_serpent_text_and_button = tp.Group([obsidian_serpent_text, obsidian_serpent_button], "v")
+        obsidian_serpent_group = tp.Group([image_padding,obsidian_serpent_text_and_button], "h")
 
-        black_cat_text_and_button3 = tp.Group([black_cat_text3, black_cat_button3], "v")
-        black_cat_group3 = tp.Group([image_padding,black_cat_text_and_button3], "h")
+        iron_helm_text_and_button = tp.Group([iron_helm_text, iron_helm_button], "v")
+        iron_helm_group = tp.Group([image_padding,iron_helm_text_and_button], "h")
 
-        black_cat_text_and_button4 = tp.Group([black_cat_text4, black_cat_button4], "v")
-        black_cat_group4 = tp.Group([image_padding,black_cat_text_and_button4], "h")
+        ember_crown_text_and_button = tp.Group([ember_crown_text, ember_crown_button], "v")
+        ember_crown_group = tp.Group([image_padding,ember_crown_text_and_button], "h")
 
         black_cat_text_and_button5 = tp.Group([black_cat_text5, black_cat_button5], "v")
         black_cat_group5 = tp.Group([image_padding,black_cat_text_and_button5], "h")
@@ -447,8 +447,8 @@ def change_window(name):
         black_cat_text_and_button6 = tp.Group([black_cat_text6, black_cat_button6], "v")
         black_cat_group6 = tp.Group([image_padding,black_cat_text_and_button6], "h")
 
-        first_row = tp.Group([black_cat_group,black_cat_group2,black_cat_group3], "h")
-        second_row = tp.Group([black_cat_group4,black_cat_group5,black_cat_group6], "h")
+        first_row = tp.Group([black_cat_group,obsidian_serpent_group,iron_helm_group], "h")
+        second_row = tp.Group([ember_crown_group,black_cat_group5,black_cat_group6], "h")
         save_all = tp.Group([first_row, second_row], "v")
 
         main_group = tp.Group([save_all], "h")
@@ -718,6 +718,30 @@ Types = {
             "img_med": load_tile("gfx/black_cat.gif", monster_tile_size_med),
             "img_max": load_tile("gfx/black_cat.gif", monster_tile_size_max),
             "description": 'A black cat is all about luck. When you happen to see a black cat under stairs or something it needs luck. Affects the all around game not just the dodge of Taurians and crap. When a Cyclops dies and "sees the future", Black Cat is unaffected. You can see luck in effect when you follow the "combat log" aka the combat flow.'
+        },
+        "obsidian serpent": {
+            "img_min": load_tile("gfx/obsidian_serpent.gif", monster_tile_size_min),
+            "img_med": load_tile("gfx/obsidian_serpent.gif", monster_tile_size_med),
+            "img_max": load_tile("gfx/obsidian_serpent.gif", monster_tile_size_max),
+            "description": 'In the poisonous realm also known as Poison Ivy they are represented by a coiled serpent carved into black stone. Once per match you gain a “Poisoned Strike” ability - a sudden flurry of attacks that bypass defenses. After the strike light is dimmer around you and you dodge more.'
+        },
+        "iron helm": {
+            "img_min": load_tile("gfx/iron_helm.gif", monster_tile_size_min),
+            "img_med": load_tile("gfx/iron_helm.gif", monster_tile_size_med),
+            "img_max": load_tile("gfx/iron_helm.gif", monster_tile_size_max),
+            "description": 'A battered helmet with a single dent, representing survival, endurance, and honor. Those under The Iron Helm star sign trust the metal. You gain defense much more from metallic equipment, and critical strikes are mitigated against you.'
+        },
+        "ember crown": {
+            "img_min": load_tile("gfx/ember_crown.gif", monster_tile_size_min),
+            "img_med": load_tile("gfx/ember_crown.gif", monster_tile_size_med),
+            "img_max": load_tile("gfx/ember_crown.gif", monster_tile_size_max),
+            "description": 'Since there is a sign only for metal - poison has carved a sign for the mind. A blazing circlet of fire hovering above a warrior\'s helm. It signifies detachment from equipment. And affinity for the elements. Especially fire and poison.'
+        },
+        "ogre's blessing": {
+            "img_min": load_tile("gfx/ember_crown.gif", monster_tile_size_min),
+            "img_med": load_tile("gfx/ember_crown.gif", monster_tile_size_med),
+            "img_max": load_tile("gfx/ember_crown.gif", monster_tile_size_max),
+            "description": 'Since there is a sign only for metal - poison has carved a sign for the mind. A blazing circlet of fire hovering above a warrior\'s helm. It signifies detachment from equipment. And affinity for the elements. Especially fire and poison.'
         }
     }
 }
@@ -729,6 +753,7 @@ def first_time_lobby(sign):
 def choose_star_sign(sign):
     global Save
     Save["npc"][3][0] = sign
+    print("Star Sign "+sign.title()+" chosen")
 
 saved_rgb = []
 def save_game(number):
@@ -853,6 +878,9 @@ while running:
         screen.blit(star_sign_icon_processed, star_sign_icon_processed_rect)
 
         screen.blit(Types["star sign"]["black cat"]["img_med"], (10, 190))
+        screen.blit(Types["star sign"]["obsidian serpent"]["img_med"], (480, 190))
+        screen.blit(Types["star sign"]["iron helm"]["img_med"], (950, 190))
+        screen.blit(Types["star sign"]["ember crown"]["img_med"], (10, 440))
 
         star_sign_logo_time = star_sign_logo_time + 4
         if star_sign_logo_time > GAME_FPS/40:
