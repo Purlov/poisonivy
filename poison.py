@@ -288,11 +288,11 @@ def change_window(name):
         save_back_to_menu_button.at_unclick=partial(change_window, "main_menu")
         save_back_to_menu_button.generate_shadow(fast=True)
 
-        choose_star_sign = tp.Button("Choose Star Sign")
-        choose_star_sign.at_unclick=partial(change_window, "star_sign")
-        choose_star_sign.generate_shadow(fast=True)
+        choose_star_sign_button = tp.Button("Choose Star Sign")
+        choose_star_sign_button.at_unclick=partial(change_window, "star_sign")
+        choose_star_sign_button.generate_shadow(fast=True)
 
-        bottom_buttons = tp.Group([choose_star_sign, save_back_to_menu_button], "h")
+        bottom_buttons = tp.Group([choose_star_sign_button, save_back_to_menu_button], "h")
 
         new_game_name = tp.TextInput(Save["character_name"], placeholder="Can be changed later")
         new_game_name.at_cancel=save_written_name
@@ -375,16 +375,83 @@ def change_window(name):
         #Save["npc"][0][0] #first npc_type
         #Save["npc"][1][TEAMS*MEMBERS][2] #last_npc_images_2biggest
         #Save["npc"][2][0] #first npc name, yours
+        #Save["npc"][3][0] #first npc star sign, yours. populated later at star_sign leaf
 
         '''for i in range(len(npc_types)):
             print(npc_types[i])
             print(npc_names[i])'''
 
     elif leaf == "star_sign":
-        black_cat_button = tp.Button("Choose Black Cat")
-        black_cat_button.at_unclick=partial(choose_sign, "black cat")
+        all_types = list(Types["star sign"].keys())
+        npc_star_signs = []
+        for i in range(TEAM_NUMBER*MEMBER_NUMBER):
+            npc_star_signs.append(all_types[random.randrange(0,len(all_types))])
+        Save["npc"].append(npc_star_signs)
 
-        main_group = tp.Group([black_cat_button], "h")
+        image_padding = tp.Text(" "*13, font_size=24)
+        #padding_v1= tp.Text("\n"*6, font_size=24)
+        black_cat_button = tp.Button("Choose Black Cat")
+        black_cat_button.at_unclick=partial(first_time_lobby, "black cat")
+        black_cat_button.generate_shadow(fast=True)
+        black_cat_button2 = tp.Button("Choose Black Cat")
+        black_cat_button2.at_unclick=partial(first_time_lobby, "black cat")
+        black_cat_button2.generate_shadow(fast=True)
+        black_cat_button3 = tp.Button("Choose Black Cat")
+        black_cat_button3.at_unclick=partial(first_time_lobby, "black cat")
+        black_cat_button3.generate_shadow(fast=True)
+        black_cat_button4 = tp.Button("Choose Black Cat")
+        black_cat_button4.at_unclick=partial(first_time_lobby, "black cat")
+        black_cat_button4.generate_shadow(fast=True)
+        black_cat_button5 = tp.Button("Choose Black Cat")
+        black_cat_button5.at_unclick=partial(first_time_lobby, "black cat")
+        black_cat_button5.generate_shadow(fast=True)
+        black_cat_button6 = tp.Button("Choose Black Cat")
+        black_cat_button6.at_unclick=partial(first_time_lobby, "black cat")
+        black_cat_button6.generate_shadow(fast=True)
+
+
+        black_cat_text = tp.Text(Types["star sign"]["black cat"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
+        black_cat_text.set_bck_color(random_bright_nonpurple_color())
+        black_cat_text.generate_shadow(fast=True)
+        black_cat_text2 = tp.Text(Types["star sign"]["black cat"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
+        black_cat_text2.set_bck_color(random_bright_nonpurple_color())
+        black_cat_text2.generate_shadow(fast=True)
+        black_cat_text3 = tp.Text(Types["star sign"]["black cat"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
+        black_cat_text3.set_bck_color(random_bright_nonpurple_color())
+        black_cat_text3.generate_shadow(fast=True)
+        black_cat_text4 = tp.Text(Types["star sign"]["black cat"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
+        black_cat_text4.set_bck_color(random_bright_nonpurple_color())
+        black_cat_text4.generate_shadow(fast=True)
+        black_cat_text5 = tp.Text(Types["star sign"]["black cat"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
+        black_cat_text5.set_bck_color(random_bright_nonpurple_color())
+        black_cat_text5.generate_shadow(fast=True)
+        black_cat_text6 = tp.Text(Types["star sign"]["black cat"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
+        black_cat_text6.set_bck_color(random_bright_nonpurple_color())
+        black_cat_text6.generate_shadow(fast=True)
+
+        black_cat_text_and_button = tp.Group([black_cat_text, black_cat_button], "v")
+        black_cat_group = tp.Group([image_padding,black_cat_text_and_button], "h")
+
+        black_cat_text_and_button2 = tp.Group([black_cat_text2, black_cat_button2], "v")
+        black_cat_group2 = tp.Group([image_padding,black_cat_text_and_button2], "h")
+
+        black_cat_text_and_button3 = tp.Group([black_cat_text3, black_cat_button3], "v")
+        black_cat_group3 = tp.Group([image_padding,black_cat_text_and_button3], "h")
+
+        black_cat_text_and_button4 = tp.Group([black_cat_text4, black_cat_button4], "v")
+        black_cat_group4 = tp.Group([image_padding,black_cat_text_and_button4], "h")
+
+        black_cat_text_and_button5 = tp.Group([black_cat_text5, black_cat_button5], "v")
+        black_cat_group5 = tp.Group([image_padding,black_cat_text_and_button5], "h")
+
+        black_cat_text_and_button6 = tp.Group([black_cat_text6, black_cat_button6], "v")
+        black_cat_group6 = tp.Group([image_padding,black_cat_text_and_button6], "h")
+
+        first_row = tp.Group([black_cat_group,black_cat_group2,black_cat_group3], "h")
+        second_row = tp.Group([black_cat_group4,black_cat_group5,black_cat_group6], "h")
+        save_all = tp.Group([first_row, second_row], "v")
+
+        main_group = tp.Group([save_all], "h")
         main_group.sort_children(gap=20)
         main_group.center_on(screen)
 
@@ -403,9 +470,6 @@ def change_window(name):
         went_through_lobby = True
         
     updater = main_group.get_updater()
-
-def choose_sign(name):
-    a =1
 
 def save_written_name():
     Save["character_name"] = new_game_name.get_value()
@@ -599,6 +663,24 @@ def color_tiles_memory(i):
 def load_tile(img, size):
     return pygame.transform.scale(pygame.image.load(img), (size,)*2)
 
+def random_bright_nonpurple_color():
+    while True:
+        r = random.randint(0, 255)
+        g = random.randint(0, 255)
+        b = random.randint(0, 255)
+
+        # Condition 1: at least one channel > 200
+        bright = (r > 200 or g > 200 or b > 200)
+
+        # Condition 2: not purple (red & blue high, green low)
+        not_purple = not (r > 200 and b > 200 and g < 100)
+
+        # Condition 3: not bright blue (blue high, red & green low)
+        not_bright_blue = not (b > 200 and r < 100 and g < 100)
+
+        if bright and not_purple and not_bright_blue:
+            return (r, g, b)
+
 Types = {
     "monster": {
         "taurian": {
@@ -635,10 +717,18 @@ Types = {
             "img_min": load_tile("gfx/black_cat.gif", monster_tile_size_min),
             "img_med": load_tile("gfx/black_cat.gif", monster_tile_size_med),
             "img_max": load_tile("gfx/black_cat.gif", monster_tile_size_max),
-            "description": "A black cat is all about luck. When you happen to see a black cat under stairs or something it needs luck. Affects the all around game not just the dodge of Taurians and crap."
+            "description": 'A black cat is all about luck. When you happen to see a black cat under stairs or something it needs luck. Affects the all around game not just the dodge of Taurians and crap. When a Cyclops dies and "sees the future", Black Cat is unaffected. You can see luck in effect when you follow the "combat log" aka the combat flow.'
         }
     }
 }
+
+def first_time_lobby(sign):
+    choose_star_sign(sign)
+    change_window("lobby")
+
+def choose_star_sign(sign):
+    global Save
+    Save["npc"][3][0] = sign
 
 saved_rgb = []
 def save_game(number):
@@ -696,8 +786,6 @@ def before_gui():
     elif leaf == "options":
         a = 1
 tp.call_before_gui(before_gui)
-
-slow_animation = round(GAME_FPS/40) 
 
 star_sign_icon_rotation = 0
 star_sign_logo_time = 0
@@ -758,16 +846,16 @@ while running:
         if new_game_color_picker.get_value() != old_char_color:
             color_tiles(0)
     elif leaf == "star_sign":
-        screen.blit(star_sign_logo_processed, (screen_width/2-star_sign_logo_processed.get_width()/2, screen_height*0.085))
+        screen.blit(star_sign_logo_processed, (screen_width/2-star_sign_logo_processed.get_width()/2, screen_height*0.02))
         #star_sign_icon_processed_rect.x = screen_width/2-star_sign_logo_processed.get_width()/2-120
         #star_sign_icon_processed_rect.y = screen_height*0.085
-        star_sign_icon_processed_rect.center = (screen_width/2-star_sign_logo_processed.get_width()/2, screen_height*0.18)
+        star_sign_icon_processed_rect.center = (screen_width/2-star_sign_logo_processed.get_width()/2, screen_height*0.1)
         screen.blit(star_sign_icon_processed, star_sign_icon_processed_rect)
 
-        screen.blit(Types["star sign"]["black cat"]["img_max"], (10, 160))
+        screen.blit(Types["star sign"]["black cat"]["img_med"], (10, 190))
 
         star_sign_logo_time = star_sign_logo_time + 4
-        if star_sign_logo_time > slow_animation:
+        if star_sign_logo_time > GAME_FPS/40:
             star_sign_logo_time = 0
             star_sign_icon_rotation = star_sign_icon_rotation + 0.25
             if star_sign_icon_rotation >= 360:
