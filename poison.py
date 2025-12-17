@@ -121,8 +121,8 @@ star_sign_icon_processed_rect = pygame.Rect(0, 0, 0, 0)
 
 normal_font = pygame.font.Font(None, 32)
 
-gladiator_text = normal_font.render("THE Gladiator", True, pygame.Color(0, 0, 0, a=140), None)
-gladiator_text_width, gladiator_text_height = gladiator_text.get_size()
+#gladiator_text = normal_font.render("THE Gladiator", True, pygame.Color(0, 0, 0, a=140), None)
+#gladiator_text_width, gladiator_text_height = gladiator_text.get_size()
 
 saving_text = normal_font.render("Saving the Game", True, pygame.Color(255, 165, 0, a=140), None)
 saving_text_w, saving_text_h = saving_text.get_size()
@@ -846,7 +846,7 @@ while running:
         screen.blit(icon_main_scaled, (screen_width/2-logo_width/2-icon_main_width-25, screen_height*0.085))
         screen.blit(golden_chest_main_scaled, (screen_width-golden_chest_main_width-10, screen_height-golden_chest_main_height-10))
         screen.blit(dark_elf_main_scaled, (screen_width-golden_chest_main_width-dark_elf_main_width-10-10, screen_height-dark_elf_main_height-10))
-        screen.blit(gladiator_text, (screen_width-gladiator_text_width-10, screen_height-dark_elf_main_height-10-gladiator_text_height))
+        #screen.blit(gladiator_text, (screen_width-gladiator_text_width-10, screen_height-dark_elf_main_height-10-gladiator_text_height))
 
     if leaf == "main_menu":
         a = 1
