@@ -402,12 +402,12 @@ def change_window(name):
         ember_crown_button = tp.Button("Choose Ember Crown")
         ember_crown_button.at_unclick=partial(first_time_lobby, "ember crown")
         ember_crown_button.generate_shadow(fast=True)
-        black_cat_button5 = tp.Button("Choose Black Cat")
-        black_cat_button5.at_unclick=partial(first_time_lobby, "black cat")
-        black_cat_button5.generate_shadow(fast=True)
-        black_cat_button6 = tp.Button("Choose Black Cat")
-        black_cat_button6.at_unclick=partial(first_time_lobby, "black cat")
-        black_cat_button6.generate_shadow(fast=True)
+        ogres_blessing_button = tp.Button("Choose Ogre's Blessing")
+        ogres_blessing_button.at_unclick=partial(first_time_lobby, "ogre's blessing")
+        ogres_blessing_button.generate_shadow(fast=True)
+        frog_button = tp.Button("Choose Frog")
+        frog_button.at_unclick=partial(first_time_lobby, "frog")
+        frog_button.generate_shadow(fast=True)
 
 
         black_cat_text = tp.Text(Types["star sign"]["black cat"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
@@ -422,12 +422,12 @@ def change_window(name):
         ember_crown_text = tp.Text(Types["star sign"]["ember crown"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
         ember_crown_text.set_bck_color(random_bright_nonpurple_color())
         ember_crown_text.generate_shadow(fast=True)
-        black_cat_text5 = tp.Text(Types["star sign"]["black cat"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
-        black_cat_text5.set_bck_color(random_bright_nonpurple_color())
-        black_cat_text5.generate_shadow(fast=True)
-        black_cat_text6 = tp.Text(Types["star sign"]["black cat"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
-        black_cat_text6.set_bck_color(random_bright_nonpurple_color())
-        black_cat_text6.generate_shadow(fast=True)
+        ogres_blessing_text = tp.Text(Types["star sign"]["ogre's blessing"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
+        ogres_blessing_text.set_bck_color(random_bright_nonpurple_color())
+        ogres_blessing_text.generate_shadow(fast=True)
+        frog_text = tp.Text(Types["star sign"]["frog"]["description"], font_size=20, font_color=(120,0,120), max_width=350)
+        frog_text.set_bck_color(random_bright_nonpurple_color())
+        frog_text.generate_shadow(fast=True)
 
         black_cat_text_and_button = tp.Group([black_cat_text, black_cat_button], "v")
         black_cat_group = tp.Group([image_padding,black_cat_text_and_button], "h")
@@ -441,14 +441,14 @@ def change_window(name):
         ember_crown_text_and_button = tp.Group([ember_crown_text, ember_crown_button], "v")
         ember_crown_group = tp.Group([image_padding,ember_crown_text_and_button], "h")
 
-        black_cat_text_and_button5 = tp.Group([black_cat_text5, black_cat_button5], "v")
-        black_cat_group5 = tp.Group([image_padding,black_cat_text_and_button5], "h")
+        ogres_blessing_text_and_button = tp.Group([ogres_blessing_text, ogres_blessing_button], "v")
+        ogres_blessing_group = tp.Group([image_padding,ogres_blessing_text_and_button], "h")
 
-        black_cat_text_and_button6 = tp.Group([black_cat_text6, black_cat_button6], "v")
-        black_cat_group6 = tp.Group([image_padding,black_cat_text_and_button6], "h")
+        frog_text_and_button = tp.Group([frog_text, frog_button], "v")
+        frog_group = tp.Group([image_padding,frog_text_and_button], "h")
 
         first_row = tp.Group([black_cat_group,obsidian_serpent_group,iron_helm_group], "h")
-        second_row = tp.Group([ember_crown_group,black_cat_group5,black_cat_group6], "h")
+        second_row = tp.Group([ember_crown_group,ogres_blessing_group,frog_group], "h")
         save_all = tp.Group([first_row, second_row], "v")
 
         main_group = tp.Group([save_all], "h")
@@ -660,8 +660,11 @@ def color_tiles_memory(i):
     
     processed_images.append((new_image1, new_image2, new_image3))
 
-def load_tile(img, size):
-    return pygame.transform.scale(pygame.image.load(img), (size,)*2)
+def load_tile(img, size, size2= 0):
+    if size2 != 0:
+        return pygame.transform.scale(pygame.image.load(img), (size, size2))
+    else:
+        return pygame.transform.scale(pygame.image.load(img), (size,)*2)
 
 def random_bright_nonpurple_color():
     while True:
@@ -717,19 +720,19 @@ Types = {
             "img_min": load_tile("gfx/black_cat.gif", monster_tile_size_min),
             "img_med": load_tile("gfx/black_cat.gif", monster_tile_size_med),
             "img_max": load_tile("gfx/black_cat.gif", monster_tile_size_max),
-            "description": 'A black cat is all about luck. When you happen to see a black cat under stairs or something it needs luck. Affects the all around game not just the dodge of Taurians and crap. When a Cyclops dies and "sees the future", Black Cat is unaffected. You can see luck in effect when you follow the "combat log" aka the combat flow.'
+            "description": 'A black cat is all about luck. When you happen to see a black cat under stairs it needs luck. Luck affects the all around game not just stuff like the dodge ability of Taurians. If a boss curses you, Black Cat is unaffected. You can see luck in effect when you follow the "combat log".'
         },
         "obsidian serpent": {
             "img_min": load_tile("gfx/obsidian_serpent.gif", monster_tile_size_min),
             "img_med": load_tile("gfx/obsidian_serpent.gif", monster_tile_size_med),
             "img_max": load_tile("gfx/obsidian_serpent.gif", monster_tile_size_max),
-            "description": 'In the poisonous realm also known as Poison Ivy they are represented by a coiled serpent carved into black stone. Once per match you gain a “Poisoned Strike” ability - a sudden flurry of attacks that bypass defenses. After the strike light is dimmer around you and you dodge more.'
+            "description": 'In this poisonous realm known as Poison Ivy they are represented by a coiled serpent carved into black stone. They gain the ability called  “Poisoned Strike” - a sudden flurry of attacks that bypass defenses. After the strike light is dimmer around you and you dodge more.'
         },
         "iron helm": {
             "img_min": load_tile("gfx/iron_helm.gif", monster_tile_size_min),
             "img_med": load_tile("gfx/iron_helm.gif", monster_tile_size_med),
             "img_max": load_tile("gfx/iron_helm.gif", monster_tile_size_max),
-            "description": 'A battered helmet with a single dent, representing survival, endurance, and honor. Those under The Iron Helm star sign trust the metal. You gain defense much more from metallic equipment, and critical strikes are mitigated against you.'
+            "description": 'A battered helmet with a single dent, representing survival, endurance, and honor. Those under The Iron Helm star sign trust the metal. You gain defense much more from metallic equipment, and critical strikes are mitigated against you. You are also a good smith.'
         },
         "ember crown": {
             "img_min": load_tile("gfx/ember_crown.gif", monster_tile_size_min),
@@ -738,11 +741,17 @@ Types = {
             "description": 'Since there is a sign only for metal - poison has carved a sign for the mind. A blazing circlet of fire hovering above a warrior\'s helm. It signifies detachment from equipment. And affinity for the elements. Especially fire and poison.'
         },
         "ogre's blessing": {
-            "img_min": load_tile("gfx/ember_crown.gif", monster_tile_size_min),
-            "img_med": load_tile("gfx/ember_crown.gif", monster_tile_size_med),
-            "img_max": load_tile("gfx/ember_crown.gif", monster_tile_size_max),
-            "description": 'Since there is a sign only for metal - poison has carved a sign for the mind. A blazing circlet of fire hovering above a warrior\'s helm. It signifies detachment from equipment. And affinity for the elements. Especially fire and poison.'
-        }
+            "img_min": load_tile("gfx/ogre\'s_blessing.png", monster_tile_size_min*2, monster_tile_size_min*4),
+            "img_med": load_tile("gfx/ogre\'s_blessing.png", monster_tile_size_med*2, monster_tile_size_med*4),
+            "img_max": load_tile("gfx/ogre\'s_blessing.png", monster_tile_size_max*2, monster_tile_size_max*4),
+            "description": 'Ogre\'s blessing is two-fold. You are slower, but you simply hit more. You digest food faster, but you also find more of it. The benefits always outweigh the negatives, if you know what I mean.'
+        },
+        "frog": {
+            "img_min": load_tile("gfx/frog.png", monster_tile_size_min, monster_tile_size_min),
+            "img_med": load_tile("gfx/frog.png", monster_tile_size_med, monster_tile_size_med),
+            "img_max": load_tile("gfx/frog.png", monster_tile_size_max, monster_tile_size_max),
+            "description": 'Frogs are worried about equality. If one of your skills is too big, you can redistribute EXP from it to other skills. That can change up leveling. You can also have additional conversation opportunities with NPCs in Poison Ivy.'
+        },
     }
 }
 
@@ -879,8 +888,10 @@ while running:
 
         screen.blit(Types["star sign"]["black cat"]["img_med"], (10, 190))
         screen.blit(Types["star sign"]["obsidian serpent"]["img_med"], (480, 190))
-        screen.blit(Types["star sign"]["iron helm"]["img_med"], (950, 190))
+        screen.blit(Types["star sign"]["iron helm"]["img_med"], (925, 190))
         screen.blit(Types["star sign"]["ember crown"]["img_med"], (10, 440))
+        screen.blit(Types["star sign"]["ogre's blessing"]["img_med"], (450, 340))
+        screen.blit(Types["star sign"]["frog"]["img_med"], (925, 440))
 
         star_sign_logo_time = star_sign_logo_time + 4
         if star_sign_logo_time > GAME_FPS/40:
