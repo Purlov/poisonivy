@@ -1,0 +1,1 @@
+Press Windows key + R, type cmd, then press Enter or click OK. 
