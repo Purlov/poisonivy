@@ -694,28 +694,28 @@ Types = {
             "img_med": load_tile("gfx/taurian.png", monster_tile_size_med),
             "img_max": load_tile("gfx/taurian.png", monster_tile_size_max),
             "hp": 100,
-            "description": "Taurians are agile and strong. Their type of fighting is close combat with dual weapons. They don't wear armour but they instead dodge. That's a good style. They come from a lush jungle where they cook magic porridges so they have aptitude for magically enchanted things, and the whole area of ."
+            "description": "Taurians are agile and strong. Their type of fighting is close combat with dual weapons. They don't wear armour but they instead dodge. That's a good style. They come from a lush jungle where they cook magic porridges so they have aptitude for magically enchanted things, and the whole area of this magical jungle."
         }, 
         "dark elf": {
             "img_min": load_tile("gfx/dark_elf.png", monster_tile_size_min),
             "img_med": load_tile("gfx/dark_elf.png", monster_tile_size_med),
             "img_max": load_tile("gfx/dark_elf.png", monster_tile_size_max),
             "hp": 100,
-            "description": "Dark Elf is a frost mage who sings enemies into ice cubes. Their tactics are to slow enemies who are more powerful than they are or outright turn them into cubes which blocks the elf's own action completely as well. Their bones started getting cold so they came to Poison Ivy. Their ice is sometimes effective in this kind of climate."
+            "description": "Dark Elf is a frost mage who sings enemies into ice cubes. Their tactics are to slow enemies who are more powerful than they are or outright turn them into cubes which blocks the elf's own action completely as well. Their bones started getting cold so they came to this jungle. Their ice is sometimes effective in this kind of climate."
         },
         "skeleton": {
             "img_min": load_tile("gfx/skeleton.png", monster_tile_size_min),
             "img_med": load_tile("gfx/skeleton.png", monster_tile_size_med),
             "img_max": load_tile("gfx/skeleton.png", monster_tile_size_max),
             "hp": 100,
-            "description": "Skeletons have been animated by people who shouldn't have done that. The skeletons are angry at life and so they collect all kinds of spells and are one of the most powerful spell casters in Poison Ivy."
+            "description": "Skeletons have been animated by people who shouldn't have done that. The skeletons are angry at life and so they collect all kinds of spells and are one of the most powerful spell casters in this jungle."
         },
         "cyclops": {
             "img_min": load_tile("gfx/cyclops.png", monster_tile_size_min),
             "img_med": load_tile("gfx/cyclops.png", monster_tile_size_med),
             "img_max": load_tile("gfx/cyclops.png", monster_tile_size_max),
             "hp": 100,
-            "description": "Cyclopes are really good at lore. That makes them respect unique stuff which might not be the most powerful ones. Their tactic is to go in heavy armour, maybe even a shield. They come to Poison Ivy after lore. Sometimes when a Cyclops is killed they can see the future which means that a random enemy dies as well - maybe even the main boss."
+            "description": "Cyclopes are really good at lore. That makes them respect unique stuff which might not be the most powerful ones. Their tactic is to go in heavy armour, maybe even a shield. They come to this jungle after lore. Sometimes when a Cyclops is killed they can see the future which means that a random enemy dies as well - maybe even the main boss."
         }
     },
     "star sign": { 
@@ -729,7 +729,7 @@ Types = {
             "img_min": load_tile("gfx/obsidian_serpent.gif", monster_tile_size_min),
             "img_med": load_tile("gfx/obsidian_serpent.gif", monster_tile_size_med),
             "img_max": load_tile("gfx/obsidian_serpent.gif", monster_tile_size_max),
-            "description": 'In this poisonous realm known as Poison Ivy they are represented by a coiled serpent carved into black stone. They gain the ability called  “Poisoned Strike” - a sudden flurry of attacks that bypass defenses. After the strike light is dimmer around you and you dodge more.'
+            "description": 'In this jungle they are represented by a coiled serpent carved into black stone. They gain the ability called  “Poisoned Strike” - a sudden flurry of attacks that bypass defenses. After the strike light is dimmer around you and you dodge more.'
         },
         "iron helm": {
             "img_min": load_tile("gfx/iron_helm.gif", monster_tile_size_min),
@@ -741,7 +741,7 @@ Types = {
             "img_min": load_tile("gfx/ember_crown.gif", monster_tile_size_min),
             "img_med": load_tile("gfx/ember_crown.gif", monster_tile_size_med),
             "img_max": load_tile("gfx/ember_crown.gif", monster_tile_size_max),
-            "description": 'Since there is a sign only for metal - poison has carved a sign for the mind. A blazing circlet of fire hovering above a warrior\'s helm. It signifies detachment from equipment. And affinity for the elements. Especially fire and poison.'
+            "description": 'Since there is a sign only for metal - jungle has carved a sign for the mind. A blazing circlet of fire hovering above a warrior\'s helm. It signifies detachment from equipment. And affinity for the elements. Especially fire and poison.'
         },
         "ogre's blessing": {
             "img_min": load_tile("gfx/ogre\'s_blessing.png", monster_tile_size_min*2, monster_tile_size_min*4),
@@ -753,7 +753,7 @@ Types = {
             "img_min": load_tile("gfx/frog.png", monster_tile_size_min, monster_tile_size_min),
             "img_med": load_tile("gfx/frog.png", monster_tile_size_med, monster_tile_size_med),
             "img_max": load_tile("gfx/frog.png", monster_tile_size_max, monster_tile_size_max),
-            "description": 'Frogs are worried about equality. If one of your skills is too big, you can redistribute EXP from it to other skills. That can change up leveling. You can also have additional conversation opportunities with NPCs in Poison Ivy.'
+            "description": 'Frogs are worried about equality. If one of your skills is too big, you can redistribute EXP from it to other skills. That can change up leveling. You can also have additional conversation opportunities with NPCs in this jungle.'
         },
     }
 }
