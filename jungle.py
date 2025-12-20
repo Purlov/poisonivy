@@ -96,7 +96,7 @@ else:
 logo = pygame.image.load("gfx/logo.png")
 logo_width, logo_height = logo.get_size()
 
-bg_tile = pygame.image.load("gfx/bg_tile.png")
+bg_tile = pygame.image.load("gfx/bg_tile.png").convert()
 bg_tile_width, bg_tile_height = bg_tile.get_size()
 
 new_game_logo = pygame.image.load("gfx/new_game_logo.png")
@@ -364,7 +364,7 @@ def change_window(name):
         npc_types = []
         npc_names = []
         saved_rgb = []
-        for i in range(TEAM_NUMBER*MEMBER_NUMBER):
+        for i in range(1): #TEAM_NUMBER*MEMBER_NUMBER
             npc_types.append(all_types[random.randrange(0,len(all_types))])
             color_tiles(i)
             npc_names.append(name_generator())
@@ -390,7 +390,7 @@ def change_window(name):
     elif leaf == "star_sign":
         all_types = list(Types["star sign"].keys())
         npc_star_signs = []
-        for i in range(TEAM_NUMBER*MEMBER_NUMBER):
+        for i in range(1): #TEAM_NUMBER*MEMBER_NUMBER
             npc_star_signs.append(all_types[random.randrange(0,len(all_types))])
         Save["npc"].append(npc_star_signs)
 
@@ -843,7 +843,11 @@ while running:
             if alert.choice == "Yes":
                     running = False
 
-    screen.fill((150,150,150)) # Clear screen
+    #screen.fill((150,150,150)) # Clear screen
+    if leaf in ("main_menu", "save_game", "load game", "options", "new_game", "star_sign"):
+        for x in range(round(screen_width/bg_tile_width)):
+            for y in range(round(screen_height/bg_tile_height)):
+                screen.blit(bg_tile, (x*bg_tile_width, y*bg_tile_height))
 
     fps_refresh_time += 1
     if fps_refresh_time >= GAME_FPS/7:
@@ -855,11 +859,6 @@ while running:
     debug_text = normal_font.render("Save identifier="+str(Save["identifier"]), True, pygame.Color(255, 165, 0, a=140), None)
     debug_text_w, debug_text_h = loading_text.get_size()
     screen.blit(debug_text,(10,screen_height-10-debug_text_h))
-
-    if leaf == "new_game" or leaf == "star_sign" or leaf == "main_menu" or leaf =="save_game" or leaf=="load_game" or leaf == "options":
-        for x in range(round(screen_width/bg_tile_width)):
-            for y in range(round(screen_height/bg_tile_height)):
-                screen.blit(bg_tile, (x*bg_tile_width, y*bg_tile_height))
 
     if leaf == "main_menu" or leaf =="save_game" or leaf=="load_game" or leaf == "options":
         screen.blit(logo, (screen_width/2-logo_width/2, screen_height*0.085))
@@ -881,6 +880,7 @@ while running:
         pygame.draw.rect(screen, (50,50,250), (screen_width/2-625/2-icon_main_width-25, screen_height*0.085+icon_main_height+25,1000,400))
         #screen_width/2-logo_width/2-icon_main_width-25, screen_height*0.085+icon_main_height+25
     elif leaf == "new_game":
+        pygame.draw.rect(screen, (150,75,0), (screen_width/2-625/2-icon_main_width-45+75-10, screen_height*0.085+icon_main_height+25-10-10,875+20,400+20+20))
         pygame.draw.rect(screen, (50,150,50), (screen_width/2-625/2-icon_main_width-45+75, screen_height*0.085+icon_main_height+25-10,875,400+20))
         screen.blit(new_game_logo_processed, (screen_width/2-new_game_logo_width/2, screen_height*0.085))
         img = processed_images[0][2]
