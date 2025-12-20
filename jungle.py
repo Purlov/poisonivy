@@ -93,30 +93,30 @@ else:
         compressed = lzma.compress(pickled)
         file.write(compressed)
 
-logo = pygame.image.load("gfx/logo.png")
+logo = pygame.image.load("gfx/logo.png").convert_alpha() 
 logo_width, logo_height = logo.get_size()
 
 bg_tile = pygame.image.load("gfx/bg_tile.png").convert()
 bg_tile_width, bg_tile_height = bg_tile.get_size()
 
-new_game_logo = pygame.image.load("gfx/new_game_logo.png")
+new_game_logo = pygame.image.load("gfx/new_game_logo.png").convert_alpha() 
 new_game_logo_width, new_game_logo_height = new_game_logo.get_size()
 new_game_logo_processed = new_game_logo
 
-icon_main_scaled = pygame.transform.scale(icon, (150, 150))
+icon_main_scaled = pygame.transform.scale(icon, (150, 150)).convert_alpha() 
 icon_main_width, icon_main_height = 150, 150
 
-golden_chest = pygame.image.load("gfx/golden_chest.png")
+golden_chest = pygame.image.load("gfx/golden_chest.png").convert_alpha() 
 golden_chest_main_scaled = pygame.transform.scale(golden_chest, (55, 55))
 golden_chest_main_width, golden_chest_main_height = 55, 55
 
-dark_elf = pygame.image.load("gfx/dark_elf.png")
+dark_elf = pygame.image.load("gfx/dark_elf.png").convert_alpha() 
 dark_elf_main_scaled = pygame.transform.scale(dark_elf, (55, 55))
 dark_elf_main_width, dark_elf_main_height = 55, 55
 
-star_sign_logo = pygame.image.load("gfx/star_sign.png")
+star_sign_logo = pygame.image.load("gfx/star_sign.png").convert_alpha() 
 star_sign_logo_processed = star_sign_logo
-star_sign_icon = pygame.image.load("gfx/star.png")
+star_sign_icon = pygame.image.load("gfx/star.png").convert_alpha() 
 w,h = star_sign_icon.get_size()
 star_sign_icon_rect = star_sign_icon.get_rect(center=(w/2, h/2))
 star_sign_icon_processed = star_sign_icon
@@ -588,15 +588,59 @@ def rgb_to_hue_branchless(r, g, b):
         # Scale to degrees
         return 60.0 * hue
 
+def fill_gradient(surface, color, gradient, rect=None, vertical=True, forward=True):
+    """fill a surface with a gradient pattern
+    Parameters:
+    color -> starting color
+    gradient -> final color
+    rect -> area to fill; default is surface's rect
+    vertical -> True=vertical; False=horizontal
+    forward -> True=forward; False=reverse
+    
+    Pygame recipe: http://www.pygame.org/wiki/GradientCode
+    """
+    if rect is None: rect = surface.get_rect()
+    x1,x2 = rect.left, rect.right
+    y1,y2 = rect.top, rect.bottom
+    if vertical: h = y2-y1
+    else:        h = x2-x1
+    if forward: a, b = color, gradient
+    else:       b, a = color, gradient
+    rate = (
+        float(b[0]-a[0])/h,
+        float(b[1]-a[1])/h,
+        float(b[2]-a[2])/h
+    )
+    fn_line = pygame.draw.line
+    if vertical:
+        for line in range(y1,y2):
+            color = (
+                min(max(a[0]+(rate[0]*(line-y1)),0),255),
+                min(max(a[1]+(rate[1]*(line-y1)),0),255),
+                min(max(a[2]+(rate[2]*(line-y1)),0),255)
+            )
+            fn_line(surface, color, (x1,line), (x2,line))
+    else:
+        for col in range(x1,x2):
+            color = (
+                min(max(a[0]+(rate[0]*(col-x1)),0),255),
+                min(max(a[1]+(rate[1]*(col-x1)),0),255),
+                min(max(a[2]+(rate[2]*(col-x1)),0),255)
+            )
+            fn_line(surface, color, (col,y1), (col,y2))
+
 monster_tile_size_min = 32
 monster_tile_size_med = 55
 monster_tile_size_max = 155
+
+star_sign_gradient = pygame.Surface((round(monster_tile_size_med*1.2),round(monster_tile_size_med*1.2)))
+fill_gradient(star_sign_gradient, (110, 75, 52), (220, 245, 232), rect=None, vertical=True, forward=True)
 
 processed_images = [[]]
 
 old_char_color = (255,255,255,255)
 processed_images = []
-for i in range(TEAM_NUMBER*MEMBER_NUMBER):
+for i in range(1): #TEAM_NUMBER*MEMBER_NUMBER
     processed_images.append(0)
 
 def color_tiles(i):
@@ -808,7 +852,7 @@ def load_game(number):
                 Save = pickle.loads(decompressed)
                 saved_rgb = Save["npc"][1]
                 processed_images = []
-                for i in range(TEAM_NUMBER*MEMBER_NUMBER):
+                for i in range(1): #TEAM_NUMBER*MEMBER_NUMBER
                     color_tiles_memory(i)
                 Save["npc"][1] = processed_images
                 loaded_game = True
@@ -818,7 +862,7 @@ change_window("main_menu")
 clock = pygame.time.Clock()
 
 def before_gui():
-    screen.fill((50,255,20))
+    screen.fill((150,150,20))
     if leaf == "main_menu":
         a = 1
     elif leaf == "save_game":
@@ -901,11 +945,17 @@ while running:
         star_sign_icon_processed_rect.center = (screen_width/2-star_sign_logo_processed.get_width()/2, screen_height*0.1)
         screen.blit(star_sign_icon_processed, star_sign_icon_processed_rect)
 
+        screen.blit(star_sign_gradient, (10-5,190-5))
         screen.blit(Types["star sign"]["black cat"]["img_med"], (10, 190))
+        screen.blit(star_sign_gradient, (480-5,190-5))
         screen.blit(Types["star sign"]["obsidian serpent"]["img_med"], (480, 190))
+        screen.blit(star_sign_gradient, (925-5,190-5))
         screen.blit(Types["star sign"]["iron helm"]["img_med"], (925, 190))
+        screen.blit(star_sign_gradient, (10-5,440-5))
         screen.blit(Types["star sign"]["ember crown"]["img_med"], (10, 440))
+        #screen.blit(star_sign_gradient, (450-5,340-5))
         screen.blit(Types["star sign"]["ogre's blessing"]["img_med"], (450, 340))
+        screen.blit(star_sign_gradient, (925-5,440-5))
         screen.blit(Types["star sign"]["frog"]["img_med"], (925, 440))
 
         star_sign_logo_time = star_sign_logo_time + 4
