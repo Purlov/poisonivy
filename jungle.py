@@ -32,12 +32,24 @@ tp.init(screen, tp.theme_game1)
 
 tp.set_default_font(("arial"), 24)
 
-'''def go_full_screen():
-    global screen
-    screen = pygame.display.set_mode((1366,768), pygame.FULLSCREEN)
+gone_full_screen = False
+def go_full_screen():
+    global screen, gone_full_screen
+    if gone_full_screen == False:
+        screen = pygame.display.set_mode((1366,768), pygame.NOFRAME + pygame.FULLSCREEN, 32, vsync=1)
+        gone_full_screen = True
+    else:
+        screen = pygame.display.set_mode((1366,768), pygame.RESIZABLE, 32, vsync=1)
+        gone_full_screen = False
 
-def go_windowed():
-    pygame.display.toggle_fullscreen()'''
+'''def go_full_screen3():
+    global screen, gone_full_screen
+    if gone_full_screen == False:
+        screen = pygame.display.set_mode((1366,768), pygame.SCALED | pygame.FULLSCREEN)
+        gone_full_screen = True
+    else:
+        screen = pygame.display.set_mode((1366,768))
+        gone_full_screen = False'''
 
 '''text = tp.Text("Here we use a dummy, Paint-generated\nimage for demonstration. "+\
                    "Try to move the elements below.")
@@ -185,7 +197,7 @@ def change_window(name):
         main_menu_objects[len(main_menu_objects)-1].at_unclick=partial(change_window, "options")
         main_menu_objects[len(main_menu_objects)-1].generate_shadow(fast=True)
         main_menu_objects.append(tp.Button("Toggle Screen"))
-        main_menu_objects[len(main_menu_objects)-1].at_unclick=pygame.display.toggle_fullscreen
+        main_menu_objects[len(main_menu_objects)-1].at_unclick=go_full_screen
         main_menu_objects[len(main_menu_objects)-1].generate_shadow(fast=True)
         main_menu_objects.append(tp.Button("Debug Window"))
         main_menu_objects[len(main_menu_objects)-1].at_unclick=partial(change_window, "debug")
