@@ -1,1 +1,6 @@
 Press Windows key + R, type cmd, then press Enter or click OK. 
+
+Copy a command from the website by painting it and pressing ctrl + C
+Then paste it into the command line by pressing ctrl + V and then hit Enter to execute it and then copy a new one
+
+I don't even know why I try to explain all of this.
