@@ -259,7 +259,7 @@ def change_window(name):
         #global licenses_area
         global licenses_area#, licenses_box
         licenses_area = tp.Text(LICENSES, max_width=950, font_color=(250,250,250))
-        licenses_area.set_font_name("century")
+        licenses_area.set_font_name("verdana")
         licenses_area.set_font_size(18)
         #licenses_box = tp.Box([licenses_area], size_limit=(1000,600))
         #licenses_box.at_drag = splice_license
