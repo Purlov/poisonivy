@@ -704,14 +704,14 @@ Types = {
             "img_med": load_tile("gfx/dark_elf.png", monster_tile_size_med),
             "img_max": load_tile("gfx/dark_elf.png", monster_tile_size_max),
             "hp": 100,
-            "description": "Dark Elf is a frost mage who sings enemies into ice cubes. Their tactics are to slow enemies who are more powerful than they are or outright turn them into cubes which blocks the elf's own action completely as well. Their bones started getting cold so they came to this jungle. Their ice is sometimes effective in this kind of climate."
+            "description": "Dark Elf is a frost mage who sings enemies into ice cubes. Their tactics are to slow enemies who are more powerful than they are or outright turn them into cubes which blocks the elf's own action completely as well. Their bones started getting cold so they came to this jungle to warm up. Their ice is sometimes effective in this kind of climate."
         },
         "skeleton": {
             "img_min": load_tile("gfx/skeleton.png", monster_tile_size_min),
             "img_med": load_tile("gfx/skeleton.png", monster_tile_size_med),
             "img_max": load_tile("gfx/skeleton.png", monster_tile_size_max),
             "hp": 100,
-            "description": "Skeletons have been animated by people who shouldn't have done that. The skeletons are angry at life and so they collect all kinds of spells and are one of the most powerful spell casters in this jungle."
+            "description": "Skeletons have been animated by people who shouldn't have done that. The skeletons are angry at life and so they collect all kinds of spells and are one of the most powerful spell casters in this magical jungle."
         },
         "cyclops": {
             "img_min": load_tile("gfx/cyclops.png", monster_tile_size_min),
@@ -732,7 +732,7 @@ Types = {
             "img_min": load_tile("gfx/obsidian_serpent.gif", monster_tile_size_min),
             "img_med": load_tile("gfx/obsidian_serpent.gif", monster_tile_size_med),
             "img_max": load_tile("gfx/obsidian_serpent.gif", monster_tile_size_max),
-            "description": 'In this jungle they are represented by a coiled serpent carved into black stone. They gain the ability called  “Poisoned Strike” - a sudden flurry of attacks that bypass defenses. After the strike light is dimmer around you and you dodge more.'
+            "description": 'In the jungle they are represented by a coiled serpent carved into black stone. They gain the ability called  “Poisoned Strike” - a sudden flurry of attacks that bypass defenses. After the strike light is dimmer around you and you dodge more.'
         },
         "iron helm": {
             "img_min": load_tile("gfx/iron_helm.gif", monster_tile_size_min),
@@ -744,7 +744,7 @@ Types = {
             "img_min": load_tile("gfx/ember_crown.gif", monster_tile_size_min),
             "img_med": load_tile("gfx/ember_crown.gif", monster_tile_size_med),
             "img_max": load_tile("gfx/ember_crown.gif", monster_tile_size_max),
-            "description": 'Since there is a sign only for metal - jungle has carved a sign for the mind. A blazing circlet of fire hovering above a warrior\'s helm. It signifies detachment from equipment. And affinity for the elements. Especially fire and poison.'
+            "description": 'Since there is a sign only for metal - jungle has carved a sign for the mind. A blazing circlet of fire hovering above a warrior\'s helm. It signifies detachment from equipment. And affinity for the elements. Especially fire, plant and poison.'
         },
         "ogre's blessing": {
             "img_min": load_tile("gfx/ogre\'s_blessing.png", monster_tile_size_min*2, monster_tile_size_min*4),
@@ -756,7 +756,7 @@ Types = {
             "img_min": load_tile("gfx/frog.png", monster_tile_size_min, monster_tile_size_min),
             "img_med": load_tile("gfx/frog.png", monster_tile_size_med, monster_tile_size_med),
             "img_max": load_tile("gfx/frog.png", monster_tile_size_max, monster_tile_size_max),
-            "description": 'Frogs are worried about equality. If one of your skills is too big, you can redistribute EXP from it to other skills. That can change up leveling. You can also have additional conversation opportunities with NPCs in this jungle.'
+            "description": 'Frogs are worried about equality. If one of your skills is too big, you can redistribute experience from it to other skills. That can cause a metamorphosis of leveling methods. You also have additional conversation opportunities with the characters you meet in the jungle.'
         },
     }
 }
